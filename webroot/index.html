@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src="vendors/polymer/platform/platform.js"></script>
+</head>
+<body>
+
+
+
+<link rel="import" href="vendors/polymer/core-icons/core-icons.html">
+<link rel="import" href="vendors/polymer/paper-item/paper-item.html">
+<link rel="import" href="vendors/polymer/paper-button/paper-button.html">
+
+<capture-share host="localhost" port="9000" path="/share" debug="2">
+</capture-share>
+
+
+<polymer-element name="capture-share" attributes="host port path debug">
+<template>
+<style type="text/css">
+paper-item.share-url-label {
+  background-color: #719;
+  color: #FB9;
+}
+paper-button.generate-url-button {
+  background-color: #719;
+  color: #FB9;
+}
+</style>
+  <div>{{ shareUrl }}</div>
+  <paper-item class="share-url-label" icon="link" label="{{ shareUrl }}"></paper-item>
+  <paper-button class="generate-url-button" label="Generate URL" raised></paper-button>
+</template>
+
+<script type="text/javascript" src="vendors/peerjs/peer.js"></script>
+<script type="text/javascript">
+  Polymer('capture-share', {
+
+    // PeerJSの接続config (default
+    host: 'localhost',
+    port: 8888,
+    path: '/capture-share',
+    debug: 1,
+
+    // PeerJS接続情報の保持
+    peer: null,
+    connections: {},
+    hostPeerId: null,
+
+    shareFile: 'share.html',
+    shareUrl: '',
+
+    ready: function() {
+      this.hostPeerId = location.search.replace(/^\?/, '');
+      this.peer = new Peer({host: this.host, port: this.port, path: this.path, debug: this.debug});
+      this.peer.on('open', this.onOpen.bind(this));
+      this.peer.on('error', this.onError.bind(this));
+      this.peer.on('connection', this.onConnection.bind(this));
+    },
+
+    setShareUrl: function(id) {
+      this.shareUrl = location.origin + location.pathname + this.shareFile + '?id=' + id;
+    },
+
+    onOpen: function(id) {
+      console.log("open: " + id);
+      this.setShareUrl(id);
+    },
+
+    onError: function(error) {
+      console.log(error);
+    },
+
+    onConnection: function(connection) {
+      console.log("connection: " + connection.peer);
+      connection = this.addConnectionEvent(connection);
+      this.connections[connection.peer] = connection;
+    },
+
+    // コネクション確立時に各種イベントをセットする
+    addConnectionEvent: function(connection) {
+      connection.on('open', this.onOpenFromPartner.bind(this, connection));
+      connection.on('data', this.onDataFromPartner.bind(this, connection));
+      connection.on('close', this.onCloseFromPartner.bind(this, connection));
+      return connection;
+    },
+
+    onOpenFromPartner: function(connection) {
+      console.log('open partner: ' + connection.peer);
+      //TODO:  これを使ってgrowlなどで接続を通知するとよさそう
+      //console.log(connection.metadata.message);
+    },
+
+    onDataFromPartner: function(connection, data) {
+      console.log(data);
+    },
+
+    onCloseFromPartner: function(connection) {
+      console.log('close partner: ' + connection.peer);
+    },
+
+    // 接続処理
+    createConnection: function(connectionId) {
+      if (!connectionId) {
+        return;
+      }
+      // TODO: この処理中にmedia connectionのエラーが発生するのを調べる
+      var connection = this.peer.connect(connectionId, {
+        label: 'captureShare',
+        serialization: 'binary',
+        reliable: true,
+        metadata: {message: 'new connection!!'}
+      });
+      connection = this.addConnectionEvent(connection);
+      this.connections[connectionId] = connection;
+    },
+
+  });
+</script>
+</polymer-element>
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "capture share",
+  "version": "1.0",
+  "description": "capture share",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "scripts":["js/class.js", "js/peer.js", "background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "desktopCapture"
+  ],
+  "icons" : {
+    "128": "icon.png"
+  }
+}
