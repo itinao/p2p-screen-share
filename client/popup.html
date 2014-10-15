@@ -2,22 +2,23 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>Link Maker</title>
+    <title>Desktop Capture Share</title>
     <link rel="stylesheet" href="css/popup.css" type="text/css">
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/peer.js"></script>
+    <!--<script src="js/jquery.min.js"></script>-->
   </head>
   <body>
-    <p id="title"></p>
-    <p id="url"></p>
-    <!-- Load JavaScript-->
+    <h1 class="app-title">Desktop Capture Share</h1>
+    <div class="app-content">
+      <div id="js-share-url" class="app-share-url"></div>
+      <div class="app-share-qr">
+        <img id="js-share-qr">
+      </div>
+      <div class="app-capture-start">
+        <div>シェアを開始する</div>
+        <input id="js-capture-on-off" type="checkbox" />
+      </div>
+    </div>
+    <div class="app-attention">※ Google Chrom ver.35 以上をサポートします</div>
     <script src="js/popup.js"></script>
-
-<!--
-    <link rel="import" href="components/polymer/polymer.html">
-    <link rel="import" href="components/peer-signal.html">
-    <peer-signal host="localhost" port="9000" path="/share" debug="2"></peer-signal>
--->
-
   </body>
 </html>

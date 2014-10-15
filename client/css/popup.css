@@ -1,16 +1,50 @@
 body {
-    width: 400px;
-    margin: 0px;
-    background-color: #fff;
-    min-width: 357px;
-    overflow-x: hidden;
-    font-family: "Helvetica Neue",Helvetica,"Hiragino Kaku Gothic Pro","Lucida Grande",Verdana,Arial,Meiryo,"メイリオ",sans-serif;
+  width: 400px;
+  background-color: #BBFFCE;
+  color: #790000;
+  font-size: 16px;
+  font-family: "Helvetica Neue",Helvetica,"Hiragino Kaku Gothic Pro","Lucida Grande",Verdana,Arial,Meiryo,"メイリオ",sans-serif;
 }
 
-img {
-    margin: 5px;
-    border: 2px solid black;
-    vertical-align: middle;
-    width: 75px;
-    height: 75px;
+.app-title {
+  padding: 5px;
+  border-bottom: 1px solid #790000;
 }
+
+.app-content {
+  position: relative;
+  height: 250px;
+}
+
+.app-content .app-share-url {
+  padding: 3px 6px;
+  box-shadow: 2px 2px rgba(0,0,0,0.3);
+  background-color: #FAFAFA;
+  text-align: center;
+}
+
+.app-content .app-share-qr {
+  position: relative;
+  top: 8px;
+  left: 180px;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+}
+.app-content .app-share-qr > img {
+  width: 100%;
+  height: 100%;
+}
+
+.app-content .app-capture-start {
+  position: absolute;
+  top: 100px;
+  width: 160px;
+  text-align: center;
+}
+
+.app-attention {
+  font-size: 12px;
+  text-align: center;
+}
+
