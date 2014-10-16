@@ -1,50 +1,176 @@
 body {
   width: 400px;
-  background-color: #BBFFCE;
-  color: #790000;
-  font-size: 16px;
-  font-family: "Helvetica Neue",Helvetica,"Hiragino Kaku Gothic Pro","Lucida Grande",Verdana,Arial,Meiryo,"メイリオ",sans-serif;
-}
-
-.app-title {
-  padding: 5px;
-  border-bottom: 1px solid #790000;
-}
-
-.app-content {
-  position: relative;
-  height: 250px;
-}
-
-.app-content .app-share-url {
-  padding: 3px 6px;
-  box-shadow: 2px 2px rgba(0,0,0,0.3);
-  background-color: #FAFAFA;
+  height: 400px;
   text-align: center;
+  font-family: 'Roboto';
+}
+a {
+  text-decoration: none;
 }
 
-.app-content .app-share-qr {
-  position: relative;
-  top: 8px;
-  left: 180px;
-  width: 200px;
-  height: 200px;
-  background: #fff;
-}
-.app-content .app-share-qr > img {
+.app-wrapper {
+  background-color: #f5f5f5;
+  padding-top: 20px;
   width: 100%;
   height: 100%;
-}
-
-.app-content .app-capture-start {
   position: absolute;
-  top: 100px;
-  width: 160px;
-  text-align: center;
+  top: 0;
+  left: 0;
 }
 
-.app-attention {
+/** title */
+.app-wrapper .app-title {
+  position: absolute;
+  width: 100%;
+  background-color: #0041A2;
+  height: 60px;
+  top: 0px;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-name: spin;
+}
+.loading-area {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.loading {
+  -webkit-animation-delay: 0.3s;
+  -webkit-animation-duration: 0.8s;
+  -webkit-animation-name: load;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: 2;
+}
+.fadeout {
+  -webkit-animation-delay: 1.6s;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-name: disparition;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+}
+.fadein {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  font-size: 28px;
+  color: #ffffff; 
+  font-weight: 300;
+  -webkit-animation-delay: 2.1s;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-name: apparition;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+}
+
+
+/** content */
+.app-wrapper .app-content {
+  height: 300px;
+  background-color: #ffffff;
+  margin: 10px;
+  padding: 20px;
+  color: #666666;
+  font-weight: 300;
+  font-size: 36px;
+  text-align: center;
+  box-shadow: 0 0 2px #999999;
+  margin-top: 70px;
+}
+.description {
+  padding: 5px;
+  color: #999999;
+  font-weight: 300;
+  font-size: 30px;
+  padding-top: 20px;
+}
+.share-url {
+  color: #999999;
+  font-weight: 300;
+  font-size: 20px;
+  width: 100%;
+  height: 30px;
+  -webkit-box-shadow: rgba(0, 30, 253, 0.38) 0px 0px 6px 3px;
+  border: 2px solid rgba(48, 142, 245, 0.36);
+}
+.share-button {
+  position: relative;
+  height: 130px;
+}
+.attention {
   font-size: 12px;
-  text-align: center;
 }
 
+
+/**  */
+.app-setting-button {
+  width: 70px;
+  height: 70px;
+  background-color: #0041A2;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  box-shadow: 1px 1px 8px #333333;
+}
+
+
+/** components: toggle button */
+.label {
+  width: 200px;
+  height: 60px;
+  background: #0041A2;
+  box-shadow: inset 0 0 0 30px #4a4a4a;
+  border-radius: 30px;
+  display: block;
+  top: 50px;
+  left: 50px;
+  position: absolute;
+  z-index: 1;
+  transition: all 300ms ease-in 0s;
+}
+#switch {
+  top: 60px;
+  position: absolute;
+  left: 100px;
+}
+#switch:before {
+  content: "";
+  position: absolute;
+  top: -23px;
+  left: -75px;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  display: block;
+  background: #0041A2;
+  border: none;
+  z-index: 2;  
+  box-shadow: inset 0 0 0 40px #5f5f5f,0 0 5px 0 #000;
+  transition: box-shadow 500ms ease-in 0s, left 300ms ease-in 0s;
+}
+#switch:checked:before {
+  left: 90px;
+  box-shadow: inset 0 0 0 0 #0041A2,0 0 5px 0 #000;
+}
+#switch:checked + label {
+  box-shadow: inset 0 0 0 0 #4a4a4a;
+}
+
+
+/** animation */
+@-webkit-keyframes spin {
+  0%,100% {height: 60px;}
+  20% {height: 370px;border-bottom-left-radius: 50%;border-bottom-right-radius: 50%;}
+  35%,65% {height:53px;}50% {height:70px;} 80% {height:63px;}   
+}
+@-webkit-keyframes load {
+  0% {-webkit-transform: rotate(0deg);}
+  100% {-webkit-transform: rotate(360deg);}   
+}
+@-webkit-keyframes disparition {
+  0% {opacity: 1;}
+  100% {opacity: 0;}   
+}
+@-webkit-keyframes apparition {
+  0% {opacity: 0;}
+  100% {opacity: 1;}   
+}

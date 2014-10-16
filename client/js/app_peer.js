@@ -89,10 +89,8 @@ var AppPeer = Class.extend({
                 chromeMediaSourceId: streamId,
                 minWidth: 10,
                 minHeight: 10,
-                maxWidth: 1366,
-                maxHeight: 768
-                //maxWidth: 1920,
-                //maxHeight: 1080
+                maxWidth: 1920,
+                maxHeight: 1080
               }
             }
           },

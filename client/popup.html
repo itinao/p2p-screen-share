@@ -4,21 +4,30 @@
     <meta charset="utf-8">
     <title>Desktop Capture Share</title>
     <link rel="stylesheet" href="css/popup.css" type="text/css">
-    <!--<script src="js/jquery.min.js"></script>-->
   </head>
   <body>
-    <h1 class="app-title">Desktop Capture Share</h1>
-    <div class="app-content">
-      <div id="js-share-url" class="app-share-url"></div>
-      <div class="app-share-qr">
-        <img id="js-share-qr">
+
+    <div class="app-wrapper">
+      <div class="app-title">
+        <div class="loading-area fadeout">
+          <img src="img/reload.png" class="loading">
+        </div>
+        <div class="fadein">Desktop Capture Share</div>
       </div>
-      <div class="app-capture-start">
-        <div>シェアを開始する</div>
-        <input id="js-capture-on-off" type="checkbox" />
+    
+      <div class="app-content">
+        <div class="js-description description"></div>
+        <div class="js-share-url share-url"></div>
+        <div class="share-button">
+          <input type="checkbox" id="switch">
+          <label for="switch" class="label"></label>
+        </div>
+        <div class="attention">※ Google Chrom ver.35以上がサポート対象です</div>
       </div>
+      <div class="app-setting-button"></div>
     </div>
-    <div class="app-attention">※ Google Chrom ver.35 以上をサポートします</div>
+
     <script src="js/popup.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=load"></script>
   </body>
 </html>

@@ -3,7 +3,7 @@
   "name": "Desktop Capture Share",
   "version": "1.0",
   "description": "desktop capture share",
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
