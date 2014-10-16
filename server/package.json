@@ -4,13 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "forever start app.js",
+    "stop": "forever stopall"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.2.1",
+    "forever": "^0.11.1",
     "peer": "^0.2.7"
   }
 }
