@@ -2,10 +2,9 @@
  *
  */
 var appPeer = new AppPeer({
-  host: 'localhost',
-  port: 9000,
+  host: 'screen-share-signaling.itinao.asia',
+  port: 8080,
   path: '/share',
   debug: 2,
-  //shareUrl: 'http://localhost/test/screen_share/share.html'
-  shareUrl: 'http://localhost/~itinao/12_screen_share/share.html'
+  shareUrl: 'http://screen-share.itinao.asia/share.html'
 });
