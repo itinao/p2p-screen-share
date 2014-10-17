@@ -9,7 +9,7 @@ var load = function() {
     ready: '画面共有を開始するとURLが生成されます',
     work: '共有URLを生成しました'
   };
-  
+
   if (bg.appPeer.stream && !bg.appPeer.stream.ended) {
     var conLen = Object.keys(bg.appPeer.connections).length;// 自身は除く
     captureOnOff.checked = true;
@@ -31,20 +31,26 @@ var load = function() {
   //  shareQr.src = qrBaseUrl + bg.appPeer.shareUrl;
   } else {
     captureOnOff.checked = false;
-    shareUrl.textContent = '';
+    shareUrl.textContent = 'URL';
     desc.textContent = description.ready;
   }
-  
+
   captureOnOff.addEventListener('change', function(event) {
     if (captureOnOff.checked) {// ONに変更時
 //      shareUrl.textContent = bg.appPeer.shareUrl;
 //      desc.textContent = description.work;
 //      shareQr.src = qrBaseUrl + bg.appPeer.shareUrl;
+
+setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出したいため
       bg.appPeer.startCapture(function() {
 //        alert(bg.appPeer.shareUrl);
       });
+}, 500);
+
     } else {// OFFに変更時
       bg.location.reload();
+      shareUrl.textContent = 'URL';
+      desc.textContent = description.ready;
     }
   });
 
@@ -56,7 +62,3 @@ var load = function() {
 //if (SUPPORT_VERSION < version) {
 //  // 対象内！
 //}
-
-
-
-

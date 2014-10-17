@@ -69,6 +69,7 @@ var AppPeer = Class.extend({
   onCloseFromPartner: function(connection) {
     console.log('close partner: ' + connection.peer);
     // TODO: 切断したユーザー情報を削除する
+    delete this.connections[connection.peer];// 削除する
   },
 
   // キャプチャの共有を開始する
