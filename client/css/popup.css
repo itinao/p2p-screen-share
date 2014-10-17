@@ -49,7 +49,7 @@ a {
 }
 .fadein {
   position: absolute;
-  bottom: 0px;
+  bottom: 5px;
   width: 100%;
   font-size: 28px;
   color: #ffffff; 
@@ -94,6 +94,10 @@ a {
 .share-button {
   position: relative;
   height: 130px;
+}
+.share-button .share-button-desc {
+  font-size: 14px;
+  padding-right: 50px;
 }
 .attention {
   font-size: 12px;

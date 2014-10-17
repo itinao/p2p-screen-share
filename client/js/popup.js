@@ -6,7 +6,7 @@ var load = function() {
   var captureOnOff = document.querySelector('#switch');
   var qrBaseUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
   var description = {
-    ready: 'キャプチャを開始するとURLが生成されます',
+    ready: '画面共有を開始するとURLが生成されます',
     work: '共有URLを生成しました'
   };
   
@@ -36,15 +36,27 @@ var load = function() {
   }
   
   captureOnOff.addEventListener('change', function(event) {
-    if (captureOnOff.checked) {
+    if (captureOnOff.checked) {// ONに変更時
 //      shareUrl.textContent = bg.appPeer.shareUrl;
 //      desc.textContent = description.work;
 //      shareQr.src = qrBaseUrl + bg.appPeer.shareUrl;
       bg.appPeer.startCapture(function() {
 //        alert(bg.appPeer.shareUrl);
       });
+    } else {// OFFに変更時
+      bg.location.reload();
     }
   });
 
 }
+
+//var SUPPORT_VERSION = 35;
+//var matches = navigator.userAgent.match(/Chrome\/(...)/);// 念のため3桁とる
+//var version = Number(matches[1]);
+//if (SUPPORT_VERSION < version) {
+//  // 対象内！
+//}
+
+
+
 

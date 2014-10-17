@@ -11,21 +11,86 @@
 
 <style type="text/css">
 html, body {
-margin: 0;
-padding: 0;
-width: 100%;
-height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(156, 154, 154, 0.3);
+}
+
+// This is just to center the spinner
+.spinner {
+  -webkit-animation: rotator 1.4s linear infinite;
+}
+@-webkit-keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+.spinner-path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+@-webkit-keyframes colors {
+  0% { stroke: #4285F4; }
+  25% { stroke: #DE3E35; }
+  50% { stroke: #F7C223; }
+  75% { stroke: #1B9A59; }
+  100% { stroke: #4285F4; }
+}
+@-webkit-keyframes dash {
+ 0% { stroke-dashoffset: 187; }
+ 50% {
+   stroke-dashoffset: 46;
+   transform:rotate(135deg);
+ }
+ 100% {
+   stroke-dashoffset: 187;
+   transform:rotate(450deg);
+ }
+}
+
+.share-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 video {
-width: 100%;
-height: 100%;
+  width: 100%;
+  height: 100%;
+  background: #ff7;
 }
 </style>
 
 
+
+<div class="share-wrapper">
+  <video id="share-stream"></video>
+</div>
+
+<div class="js-loading loading">
+  <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+     <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+  </svg>
+</div>
+
+
+
+
+
 <script type="text/javascript" src="vendors/peerjs/peer.js"></script>
 <script type="text/javascript" src="js/class.js"></script>
-<video id="share-stream"></video>
 
 <script type="text/javascript">
 var AppPeer = Class.extend({
@@ -117,6 +182,12 @@ var AppPeer = Class.extend({
     });
     connection = this.addConnectionEvent(connection);
     this.connections[connectionId] = connection;
+
+
+setTimeout(function() {// loadしてる感を出すため1000ms
+  var loading = document.querySelector('.js-loading');
+  loading.remove();
+}, 1000);
   },
 });
 
