@@ -3,13 +3,13 @@
   "name": "Desktop Capture Share",
   "version": "1.0",
   "description": "desktop capture share",
-  "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://apis.google.com/ 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
   },
   "background": {
-    "scripts":["js/class.js", "js/peer.js", "js/app_peer.js", "js/background.js"]
+    "scripts":["js/knockout.js", "js/class.js", "js/peer.js", "js/app_peer.js", "js/background.js"]
   },
   "permissions": [
     "tabs",

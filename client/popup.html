@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Desktop Capture Share</title>
+    <script src="js/class.js"></script>
+    <script src="js/knockout.js"></script>
     <link rel="stylesheet" href="css/popup.css" type="text/css">
   </head>
   <body>
@@ -16,19 +18,24 @@
       </div>
     
       <div class="app-content">
-        <div class="js-description description"></div>
-        <div class="js-share-url share-url"></div>
-        <div class="share-button">
-          <span class="share-button-desc">画面共有ON/OFF</span>
-          <input type="checkbox" id="switch">
-          <label for="switch" class="label"></label>
-        </div>
-        <div class="attention">※ Google Chrom ver.35以上がサポート対象です</div>
+        <!-- ko if: isSupport -->
+          <div class="description" data-bind="html: shareDescription()"></div>
+          <div class="share-url" data-bind="text: shareUrl()"></div>
+          <div class="share-button">
+            <span class="share-button-desc">画面共有ON/OFF</span>
+            <input type="checkbox" id="switch" data-bind="event: {change: changeCaptureStatus}, attr: {checked: captureOnOff()}">
+            <label for="switch" class="label"></label>
+          </div>
+        <!-- /ko -->
+        <!-- ko ifnot: isSupport -->
+          <div class="attention">※ Google Chrom ver.35以上がサポート対象です</div>
+        <!-- /ko -->
       </div>
       <div class="app-setting-button"></div>
     </div>
 
     <script src="js/popup.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=load"></script>
+
   </body>
 </html>

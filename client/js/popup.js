@@ -1,64 +1,81 @@
-
-var load = function() {
-  var bg = chrome.extension.getBackgroundPage();
-  var desc = document.querySelector('.js-description');
-  var shareUrl = document.querySelector('.js-share-url');
-  var captureOnOff = document.querySelector('#switch');
-  var qrBaseUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
-  var description = {
+var desktopCaptureShareInstance = null;
+var DesktopCaptureShareVM = Class.extend({
+  bg: chrome.extension.getBackgroundPage(),
+//  qrBaseUrl: 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=',
+  descriptions: {
     ready: '画面共有を開始するとURLが生成されます',
-    work: '共有URLを生成しました'
-  };
+    work: '共有URLを生成しました<br>{{$1}}人が接続中です'
+  },
+  readyShareUrl: 'URL',
+  supportVersion: 35,
 
-  if (bg.appPeer.stream && !bg.appPeer.stream.ended) {
-    var conLen = Object.keys(bg.appPeer.connections).length;// 自身は除く
-    captureOnOff.checked = true;
-    desc.innerHTML = description.work + '<br>' + conLen + '人が接続中です';
+  captureOnOff: null,
+  shareUrl: null,
+  shareDescription: null,
+  
+  init: function() {
+    this.captureOnOff = ko.observable();
+    this.shareUrl = ko.observable();
+    this.shareDescription = ko.observable();
+
+    if (this.bg.appPeer.stream && !this.bg.appPeer.stream.ended) {
+      // 接続中だった場合
+      this.initConnected();
+    } else {
+      // 未接続だった場合
+      this.initUnConnected();
+    }
+  },
+
+  initConnected: function() {
+    var conLen = Object.keys(this.bg.appPeer.connections).length;
+    this.captureOnOff(true);
+    this.shareDescription(this.descriptions.work.replace('{{$1}}', conLen));
+
     // 短縮URLを取得する
     gapi.client.load('urlshortener', 'v1', function() {
       var req = gapi.client.urlshortener.url.insert({
-        resource: {'longUrl': bg.appPeer.shareUrl}
+        resource: {'longUrl': this.bg.appPeer.shareUrl}
       });
       req.execute(function(data){
         if (data.error) {
-          shareUrl.textContent = bg.appPeer.shareUrl;
+          this.shareUrl(this.bg.appPeer.shareUrl);
           return;
         }
-        var shortUrl = data.id;
-        shareUrl.textContent = shortUrl;
-      });
-    });
-  //  shareQr.src = qrBaseUrl + bg.appPeer.shareUrl;
-  } else {
-    captureOnOff.checked = false;
-    shareUrl.textContent = 'URL';
-    desc.textContent = description.ready;
-  }
+        this.shareUrl(data.id);
+      }.bind(this));
+    }.bind(this));
+  },
 
-  captureOnOff.addEventListener('change', function(event) {
-    if (captureOnOff.checked) {// ONに変更時
-//      shareUrl.textContent = bg.appPeer.shareUrl;
-//      desc.textContent = description.work;
-//      shareQr.src = qrBaseUrl + bg.appPeer.shareUrl;
+  initUnConnected: function() {
+    this.captureOnOff(false);
+    this.shareUrl(this.readyShareUrl);
+    this.shareDescription(this.descriptions.ready);
+  },
 
-setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出したいため
-      bg.appPeer.startCapture(function() {
-//        alert(bg.appPeer.shareUrl);
-      });
-}, 500);
-
-    } else {// OFFに変更時
-      bg.location.reload();
-      shareUrl.textContent = 'URL';
-      desc.textContent = description.ready;
+  changeCaptureStatus: function(self, event) {
+    event.currentTarget.checked;
+    if (event.currentTarget.checked) {
+      // ONに変更時
+      setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出す
+        this.bg.appPeer.startCapture();
+      }.bind(this), 500);
+    } else {
+      // OFFに変更時
+      this.bg.location.reload();
+      this.shareUrl(this.readyShareUrl);
+      this.shareDescription(this.descriptions.ready);
     }
-  });
+  },
 
-}
+  isSupport: function() {
+    var matches = navigator.userAgent.match(/Chrome\/(...)/);// 念のため3桁とる
+    var version = Number(matches[1]);
+    return this.supportVersion < version ? true : false;
+  }
+});
 
-//var SUPPORT_VERSION = 35;
-//var matches = navigator.userAgent.match(/Chrome\/(...)/);// 念のため3桁とる
-//var version = Number(matches[1]);
-//if (SUPPORT_VERSION < version) {
-//  // 対象内！
-//}
+var load = function() {
+  desktopCaptureShareInstance = new DesktopCaptureShareVM;
+  ko.applyBindings(desktopCaptureShareInstance);
+};
