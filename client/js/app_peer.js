@@ -15,7 +15,7 @@ var AppPeer = Class.extend({
   init: function(option) {
     this.shareBaseUrl = option.shareUrl;
     this.peer = new Peer({host: option.host, port: option.port, path: option.path, debug: option.debug});
-    this.peer.on('open', this.onOpen.bind(this));
+    this.peer.on('open', this.onOpen.bind(this, option.openCallback));
     this.peer.on('error', this.onError.bind(this));
     this.peer.on('connection', this.onConnection.bind(this));
   },
@@ -26,9 +26,10 @@ var AppPeer = Class.extend({
   },
 
   // PeerJS Serverへの接続完了イベント
-  onOpen: function(id) {
+  onOpen: function(callback, id) {
     console.log("open: " + id);
     this.setShareUrl(id);
+    callback && callback();
   },
 
   // PeerJS Serverへの接続失敗イベント

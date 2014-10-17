@@ -1,5 +1,15 @@
+/**
+ * Desctop Capture Share VIEW MODEL
+ */
 var desktopCaptureShareInstance = null;
 var DesktopCaptureShareVM = Class.extend({
+  peerConfig: {
+    host: 'screen-share-signaling.itinao.asia',
+    port: 8080,
+    path: '/share',
+    debug: 2,
+    shareUrl: 'http://screen-share.itinao.asia/share.html'
+  },
   bg: chrome.extension.getBackgroundPage(),
 //  qrBaseUrl: 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=',
   descriptions: {
@@ -18,7 +28,7 @@ var DesktopCaptureShareVM = Class.extend({
     this.shareUrl = ko.observable();
     this.shareDescription = ko.observable();
 
-    if (this.bg.appPeer.stream && !this.bg.appPeer.stream.ended) {
+    if (this.bg.appPeer && this.bg.appPeer.stream && !this.bg.appPeer.stream.ended) {
       // 接続中だった場合
       this.initConnected();
     } else {
@@ -57,15 +67,28 @@ var DesktopCaptureShareVM = Class.extend({
     event.currentTarget.checked;
     if (event.currentTarget.checked) {
       // ONに変更時
-      setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出す
-        this.bg.appPeer.startCapture();
-      }.bind(this), 500);
+      this.createPeerInstance(function() {
+        setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出す
+          this.bg.appPeer.startCapture();
+        }.bind(this), 500);
+      }.bind(this));
     } else {
       // OFFに変更時
       this.bg.location.reload();
       this.shareUrl(this.readyShareUrl);
       this.shareDescription(this.descriptions.ready);
     }
+  },
+
+  createPeerInstance: function(openCallback) {
+    this.bg.appPeer = new this.bg.AppPeer({
+      host: this.peerConfig.host,
+      port: this.peerConfig.port,
+      path: this.peerConfig.path,
+      debug: this.peerConfig.debug,
+      shareUrl: this.peerConfig.shareUrl,
+      openCallback: openCallback
+    });
   },
 
   isSupport: function() {
