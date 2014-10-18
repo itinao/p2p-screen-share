@@ -57,8 +57,10 @@ var AppPeer = Class.extend({
     console.log('open partner: ' + connection.peer);
     var mediaConnection = this.peer.call(connection.peer, this.stream);
     this.mediaConnections[connection.peer] = mediaConnection;
-    //TODO:  これを使ってgrowlなどで接続を通知するとよさそう
-    //console.log(connection.metadata.message);
+
+    // Desctop通知
+    var conLen = Object.keys(this.connections).length;
+    this.createNotification({title: '他ユーザーが共有URLを開きました', message: '{{$1}}人が閲覧中です'.replace('{{$1}}', conLen)});
   },
 
   // パートナーから送られてきたデータの受信イベント
@@ -69,8 +71,8 @@ var AppPeer = Class.extend({
   // パートナーの切断イベント
   onCloseFromPartner: function(connection) {
     console.log('close partner: ' + connection.peer);
-    // TODO: 切断したユーザー情報を削除する
-    delete this.connections[connection.peer];// 削除する
+    // 切断したユーザー情報を削除する
+    delete this.connections[connection.peer];
   },
 
   // キャプチャの共有を開始する
@@ -98,15 +100,7 @@ var AppPeer = Class.extend({
           },
           function(stream) {
             this.stream = stream;
-
-            // Desctop通知
-            chrome.notifications.create('', {
-              title: '共有が完了しました',
-              message: '拡張機能からURLを確認してください',
-              type: 'basic',
-              iconUrl: 'icon.png'
-            }, function(id){});
-
+            this.createNotification({title: '共有が完了しました', message: '拡張機能からURLを確認してください'});
             callback && callback();
           }.bind(this),
           function(error) {
@@ -114,6 +108,20 @@ var AppPeer = Class.extend({
           }
         );
       }.bind(this)
+    );
+  },
+
+  // Desctop通知
+  createNotification: function(option, callback) {
+    chrome.notifications.create('', {
+        title: option.title,
+        message: option.message,
+        type: 'basic',
+        iconUrl: 'icon.png'
+      },
+      function(id){
+        callback && callback();
+      }
     );
   }
 });
