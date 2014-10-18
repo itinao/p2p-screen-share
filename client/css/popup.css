@@ -95,6 +95,7 @@ a {
 .share-button {
   position: relative;
   height: 130px;
+  left: 30px;
 }
 .share-button .share-button-desc {
   font-size: 14px;
