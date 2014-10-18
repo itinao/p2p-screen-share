@@ -98,6 +98,15 @@ var AppPeer = Class.extend({
           },
           function(stream) {
             this.stream = stream;
+
+            // Desctop通知
+            chrome.notifications.create('', {
+              title: '共有が完了しました',
+              message: '拡張機能からURLを確認してください',
+              type: 'basic',
+              iconUrl: 'icon.png'
+            }, function(id){});
+
             callback && callback();
           }.bind(this),
           function(error) {

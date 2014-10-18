@@ -12,7 +12,7 @@
     "scripts":["js/knockout.js", "js/class.js", "js/peer.js", "js/app_peer.js", "js/background.js"]
   },
   "permissions": [
-    "tabs",
+    "notifications",
     "desktopCapture"
   ],
   "icons" : {

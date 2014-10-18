@@ -64,7 +64,6 @@ var DesktopCaptureShareVM = Class.extend({
   },
 
   changeCaptureStatus: function(self, event) {
-    event.currentTarget.checked;
     if (event.currentTarget.checked) {
       // ONに変更時
       this.createPeerInstance(function() {
