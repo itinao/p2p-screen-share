@@ -1,8 +1,16 @@
+@font-face {
+  font-family: 'RiiT_F';
+  src: url(../font/RiiT_F.otf);
+}
+
 body {
   width: 400px;
   height: 400px;
   text-align: center;
   font-family: 'Roboto';
+/*
+  font-family: 'RiiT_F' !important;
+*/
 }
 a {
   text-decoration: none;

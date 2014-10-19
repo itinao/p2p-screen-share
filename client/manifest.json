@@ -9,7 +9,7 @@
     "default_icon": "icon.png"
   },
   "background": {
-    "scripts":["js/knockout.js", "js/class.js", "js/peer.js", "js/app_peer.js", "js/background.js"]
+    "scripts":["build/js/background.min.js"]
   },
   "permissions": [
     "notifications",
