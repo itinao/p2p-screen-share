@@ -41,7 +41,15 @@ var DesktopCaptureShareVM = Class.extend({
     var conLen = Object.keys(this.bg.appPeer.connections).length;
     this.captureOnOff(true);
     this.shareDescription(this.descriptions.work.replace('{{$1}}', conLen));
+  },
 
+  initUnConnected: function() {
+    this.captureOnOff(false);
+    this.shareUrl(this.readyShareUrl);
+    this.shareDescription(this.descriptions.ready);
+  },
+
+  createShortUrl: function() {
     // 短縮URLを取得する
     gapi.client.load('urlshortener', 'v1', function() {
       var req = gapi.client.urlshortener.url.insert({
@@ -55,12 +63,6 @@ var DesktopCaptureShareVM = Class.extend({
         this.shareUrl(data.id);
       }.bind(this));
     }.bind(this));
-  },
-
-  initUnConnected: function() {
-    this.captureOnOff(false);
-    this.shareUrl(this.readyShareUrl);
-    this.shareDescription(this.descriptions.ready);
   },
 
   changeCaptureStatus: function(self, event) {
@@ -97,7 +99,12 @@ var DesktopCaptureShareVM = Class.extend({
   }
 });
 
-var load = function() {
+
+document.addEventListener("DOMContentLoaded", function() {
   desktopCaptureShareInstance = new DesktopCaptureShareVM;
   ko.applyBindings(desktopCaptureShareInstance);
+}, false);
+
+var load = function() {
+  desktopCaptureShareInstance.createShortUrl();
 };
