@@ -28,13 +28,15 @@ var DesktopCaptureShareVM = Class.extend({
     this.shareUrl = ko.observable();
     this.shareDescription = ko.observable();
 
-    if (this.bg.appPeer && this.bg.appPeer.stream && !this.bg.appPeer.stream.ended) {
-      // 接続中だった場合
+    if (this.isConnected()) {
       this.initConnected();
     } else {
-      // 未接続だった場合
       this.initUnConnected();
     }
+  },
+
+  isConnected: function() {
+    return this.bg.appPeer && this.bg.appPeer.stream && !this.bg.appPeer.stream.ended;
   },
 
   initConnected: function() {
@@ -106,5 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }, false);
 
 var load = function() {
-  desktopCaptureShareInstance.createShortUrl();
+  if (desktopCaptureShareInstance.isConnected()) {
+    desktopCaptureShareInstance.createShortUrl();
+  }
 };
