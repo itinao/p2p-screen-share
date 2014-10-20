@@ -11,6 +11,10 @@ var popupScriptBuildDir = clientBase + 'build/js/';
 var bgScriptFiles = ['client/js/class.js', 'client/js/peer.js', 'client/js/app_peer.js', 'client/js/background.js'];
 var bgScriptBuildDir = clientBase + 'build/js/';
 
+var webBase = 'webroot/';
+var webSassFiles = webBase + 'scss/*.scss';
+var webSassBuildDir = webBase + 'build/css/';
+
 
 // requires
 var gulp = require('gulp');
@@ -75,5 +79,20 @@ gulp.task('build-client', ['build-client-popup-sass', 'build-client-popup-script
 /**
  * web app タスク
  */
+// web用cssの生成
+gulp.task('build-web-sass', function() {
+  gulp.src(webSassFiles)
+  .pipe(sass())
+  .pipe(gulp.dest(webSassBuildDir))
+  .pipe(minifyCss())
+  .pipe(rename({extname: '.min.css'}))
+  .pipe(gulp.dest(webSassBuildDir));
+});
 
+// ウォッチャー
+gulp.task('build-web-watcher', function() {
+  gulp.watch(webSassFiles, function(event) {
+    gulp.run('build-web-sass');
+  });
+});
 
