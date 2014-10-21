@@ -6,17 +6,64 @@
   <link rel="stylesheet" href="build/css/share.min.css" />
   <script type="text/javascript" src="vendors/polymer/platform/platform.js"></script>
 </head>
-<body>
+<body unresolved>
 
 <link rel="import" href="vendors/polymer/polymer/polymer.html"> 
 
+<style>
+core-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0041A2;
+  color: #fff;
+  font-size: 1.5em;
+}
+.video-content {
+  position: absolute;
+  top: 12%;
+  width: 100%;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+peer-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.content-animation {
+  opacity: 0;
+  -webkit-animation: cardEnter 0.75s ease-in-out 0.5s;
+  -webkit-animation-fill-mode: both;
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
+}
+.big {
+transition: all 1s;
+top: 0%;
+height: 100%;
+background: rgba(0, 0, 0, 0.8);
+}
+</style>
 
-<div class="share-wrapper">
-  <div class="share-header">Desktop Capture Share</div>
-  <peer-video id="js-peer-video" style="display: none;" class="content-animation" host="screen-share-signaling.itinao.asia" port="8080" path="/share" debug="2"></peer-video>
+<link rel="import" href="vendors/polymer/core-toolbar/core-toolbar.html">
+<link rel="import" href="vendors/polymer/core-icon-button/core-icon-button.html">
+<core-toolbar class="tall">
+  <span flex>Desktop Capture Share</span>
+  <core-icon-button id="fullscreen-button" icon="fullscreen"></core-icon-button>
+  <!-- TODO:
+  <core-icon-button id="info-button" icon="info"></core-icon-button>
+  -->
+</core-toolbar>
+
+<div id="video-content" class="video-content">
+  <peer-video id="peer-video" style="display: none;" class="content-animation" host="screen-share-signaling.itinao.asia" port="8080" path="/share" debug="2"></peer-video>
 </div>
 
-<div class="js-loading loading">
+<div id="loading" class="loading">
   <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
      <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
   </svg>
@@ -44,6 +91,8 @@
       connections: {},
       connectionPeerId: null,
   
+      onStreamCallback: null,
+
       ready: function() {
         this.connectionPeerId = location.search.replace(/^\?id\=/, '');
         this.peer = new Peer({host: this.host, port: this.port, path: this.path, debug: this.debug});
@@ -63,14 +112,7 @@
       onStream: function(stream) {
         this.$.video.src = window.URL.createObjectURL(stream);
         this.$.video.play();
-
-setTimeout(function() {// loadしてる感を出すため1000ms
-  var loading = document.querySelector('.js-loading');
-  loading.remove();
-
-  var shareStream = document.querySelector('#js-peer-video');
-  shareStream.style.display = '';
-}, 300);
+        this.onStreamCallback && this.onStreamCallback();
       },
 
       // PeerJS Serverへの接続完了イベント
@@ -134,253 +176,28 @@ setTimeout(function() {// loadしてる感を出すため1000ms
 </polymer-element>
 
 
-
-<!--
-<div class="share-wrapper">
-  <div class="share-header">Desktop Capture Share</div>
-  <video id="share-stream" class="content-animation" style="display: none;"></video>
-</div>
-
-<div class="js-loading loading">
-  <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-     <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-  </svg>
-</div>
-
-<script type="text/javascript" src="vendors/peerjs/peer.js"></script>
-<script type="text/javascript" src="js/class.js"></script>
--->
-
-<!--
-<script type="text/javascript">
-var AppPeer = Class.extend({
-  // PeerJSの接続config (default
-  host: 'screen-share-signaling.itinao.asia',
-  port: 8080,
-  path: '/share',
-  debug: 2,
-
-  // PeerJS接続情報の保持
-  peer: null,
-  connections: {},
-  hostPeerId: null,
-
-  shareFile: 'share.html',
-  shareUrl: '',
-
-  init: function() {
-    this.hostPeerId = location.search.replace(/^\?id\=/, '');
-    this.peer = new Peer({host: this.host, port: this.port, path: this.path, debug: this.debug});
-    this.peer.on('open', this.onOpen.bind(this));
-    this.peer.on('error', this.onError.bind(this));
-    this.peer.on('call', this.onCall.bind(this));
-    this.peer.on('connection', this.onConnection.bind(this));
-  },
-
-  setShareUrl: function(id) {
-    this.shareUrl = location.origin + location.pathname + this.shareFile + '?id=' + id;
-  },
-
-  onOpen: function(id) {
-    console.log("open: " + id);
-    this.setShareUrl(id);
-    this.createConnection(this.hostPeerId);
-  },
-
-  onCall: function(mediaConnection) {
-    mediaConnection.answer();
-    mediaConnection.on('stream', function(stream) {
-      var shareStream = document.querySelector('#share-stream');
-      shareStream.src = window.URL.createObjectURL(stream);
-      shareStream.play();
-    }.bind(this));
-  },
-
-  onError: function(error) {
-    console.log(error);
-  },
-
-  onConnection: function(connection) {
-    console.log("connection: " + connection.peer);
-    connection = this.addConnectionEvent(connection);
-    this.connections[connection.peer] = connection;
-  },
-
-  // コネクション確立時に各種イベントをセットする
-  addConnectionEvent: function(connection) {
-    connection.on('open', this.onOpenFromPartner.bind(this, connection));
-    connection.on('data', this.onDataFromPartner.bind(this, connection));
-    connection.on('close', this.onCloseFromPartner.bind(this, connection));
-    return connection;
-  },
-
-  onOpenFromPartner: function(connection) {
-    console.log('open partner: ' + connection.peer);
-    //TODO:  これを使ってgrowlなどで接続を通知するとよさそう
-    //console.log(connection.metadata.message);
-  },
-
-  onDataFromPartner: function(connection, data) {
-    console.log(data);
-  },
-
-  onCloseFromPartner: function(connection) {
-    console.log('close partner: ' + connection.peer);
-  },
-
-  // 接続処理
-  createConnection: function(connectionId) {
-    if (!connectionId) {
-      return;
-    }
-    // TODO: この処理中にmedia connectionのエラーが発生するのを調べる
-    var connection = this.peer.connect(connectionId, {
-      label: 'captureShare',
-      serialization: 'binary',
-      reliable: true,
-      metadata: {message: 'new connection!!'}
-    });
-    connection = this.addConnectionEvent(connection);
-    this.connections[connectionId] = connection;
-
-
-setTimeout(function() {// loadしてる感を出すため1000ms
-  var loading = document.querySelector('.js-loading');
-  loading.remove();
-
-  var shareStream = document.querySelector('#share-stream');
-  shareStream.style.display = '';
-}, 1000);
-  },
-});
-
-
-var appPeer = new AppPeer();
-
-</script>
-
--->
-
-<!--
-
-<link rel="import" href="vendors/polymer/core-icons/core-icons.html">
-<link rel="import" href="vendors/polymer/paper-item/paper-item.html">
-<link rel="import" href="vendors/polymer/paper-button/paper-button.html">
-
-<capture-share host="localhost" port="9000" path="/share" debug="2">
-</capture-share>
-
-
-<polymer-element name="capture-share" attributes="host port path debug">
-<template>
-<style type="text/css">
-</style>
-  <video id="share-stream"></video>
-</template>
-
-<script type="text/javascript" src="vendors/peerjs/peer.js"></script>
-<script type="text/javascript">
-  Polymer('capture-share', {
-
-    // PeerJSの接続config (default
-    host: 'localhost',
-    port: 8888,
-    path: '/capture-share',
-    debug: 1,
-
-    // PeerJS接続情報の保持
-    peer: null,
-    connections: {},
-    hostPeerId: null,
-
-    shareFile: 'share.html',
-    shareUrl: '',
-
-    ready: function() {
-      this.hostPeerId = location.search.replace(/^\?id\=/, '');
-      this.peer = new Peer({host: this.host, port: this.port, path: this.path, debug: this.debug});
-      this.peer.on('open', this.onOpen.bind(this));
-      this.peer.on('error', this.onError.bind(this));
-      this.peer.on('call', this.onCall.bind(this));
-      this.peer.on('connection', this.onConnection.bind(this));
-    },
-
-    setShareUrl: function(id) {
-      this.shareUrl = location.origin + location.pathname + this.shareFile + '?id=' + id;
-    },
-
-    onOpen: function(id) {
-      console.log("open: " + id);
-      this.setShareUrl(id);
-      this.createConnection(this.hostPeerId);
-    },
-
-    onCall: function(mediaConnection) {
-      mediaConnection.answer();
-      mediaConnection.on('stream', function(stream) {
-        this.$['share-stream'].src = window.URL.createObjectURL(stream);
-        this.$['share-stream'].play();
-      }.bind(this));
-    },
-
-    onError: function(error) {
-      console.log(error);
-    },
-
-    onConnection: function(connection) {
-      console.log("connection: " + connection.peer);
-      connection = this.addConnectionEvent(connection);
-      this.connections[connection.peer] = connection;
-    },
-
-    // コネクション確立時に各種イベントをセットする
-    addConnectionEvent: function(connection) {
-      connection.on('open', this.onOpenFromPartner.bind(this, connection));
-      connection.on('data', this.onDataFromPartner.bind(this, connection));
-      connection.on('close', this.onCloseFromPartner.bind(this, connection));
-      return connection;
-    },
-
-    onOpenFromPartner: function(connection) {
-      console.log('open partner: ' + connection.peer);
-      //TODO:  これを使ってgrowlなどで接続を通知するとよさそう
-      //console.log(connection.metadata.message);
-    },
-
-    onDataFromPartner: function(connection, data) {
-      console.log(data);
-    },
-
-    onCloseFromPartner: function(connection) {
-      console.log('close partner: ' + connection.peer);
-    },
-
-    // 接続処理
-    createConnection: function(connectionId) {
-      if (!connectionId) {
-        return;
-      }
-      // TODO: この処理中にmedia connectionのエラーが発生するのを調べる
-      var connection = this.peer.connect(connectionId, {
-        label: 'captureShare',
-        serialization: 'binary',
-        reliable: true,
-        metadata: {message: 'new connection!!'}
-      });
-      connection = this.addConnectionEvent(connection);
-      this.connections[connectionId] = connection;
-    },
-
-  });
-</script>
-</polymer-element>
--->
-
-
-
 <script>
-window.addEventListener('polymer-ready', function(e) {
-console.log("aba");
+document.addEventListener('polymer-ready', function(e) {
+  var videoContent = window['video-content'];
+  var videoContentDefaultClass = videoContent.className;
+  var fullscreenButton = window['fullscreen-button'];
+  // フルスクリーン化
+  fullscreenButton.addEventListener('click', function(event) {
+    videoContent.classList.add("big")
+  });
+  // フルスクリーン化 解除
+  videoContent.addEventListener('click', function(event) {
+    videoContent.classList.remove("big")
+  });
+
+  var peerVideo = window['peer-video'];
+  var loading = window['loading'];
+  peerVideo.onStreamCallback = function() {
+    setTimeout(function() {// loadしてる感を出すため300ms
+      loading.remove();
+      peerVideo.style.display = '';
+    }, 300);
+  };
 });
 </script>
 
