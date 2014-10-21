@@ -98,17 +98,21 @@ gulp.task('build-web-html', function () {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
   var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
 
-//  gulp.src(['webroot/vendors/polymer/**/paper-*.html', 'webroot/vendors/polymer/**/core-*.html'])
+// TODO: polymerもminifyしたい
+//  gulp.src(['webroot/vendors/polymer/**/*.html'])
 //  .pipe(gulp.dest('webroot/build/components/'));
 //
-//  gulp.src(['webroot/vendors/polymer/**/paper-*.css', 'webroot/vendors/polymer/**/core-*.css'])
+//  gulp.src(['webroot/vendors/polymer/**/*.js'])
+//  .pipe(gulp.dest('webroot/build/components/'));
+//
+//  gulp.src(['webroot/vendors/polymer/**/*.css', 'webroot/vendors/polymer/**/core-*.css'])
 //  .pipe(minifyCss())
 //  .pipe(gulp.dest('webroot/build/components/'));
-
-//  gulp.src(['webroot/build/components/**/paper-*.html', 'webroot/build/components//**/core-*.html'])
-//  .pipe(vulcanize({dest: 'webroot/build/components/.tmp/'}))
+//
+//  gulp.src(['webroot/build/components/**/paper-*.html', 'webroot/build/components/**/core-*.html', 'webroot/build/components/polymer/**/polymer.html'])
+//  .pipe(vulcanize({dest: 'webroot/build/components2/'}))
 //  .pipe(minifyHtml(minifyHtmlOption))
-//  .pipe(gulp.dest('webroot/build/components/'));
+//  .pipe(gulp.dest('webroot/build/components2/'));
 
   gulp.src(webHtmlFiles)
   .pipe(vulcanize({dest: webHtmlBuildDir}))

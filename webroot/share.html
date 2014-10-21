@@ -8,48 +8,9 @@
 </head>
 <body unresolved>
 
-<link rel="import" href="vendors/polymer/polymer/polymer.html"> 
-
-<style>
-core-toolbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #0041A2;
-  color: #fff;
-  font-size: 1.5em;
-}
-.video-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-transform: scale(0.8) translateY(3%);
-}
-peer-video {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.content-animation {
-  opacity: 0;
-  -webkit-animation: cardEnter 0.75s ease-in-out 0.5s;
-  -webkit-animation-fill-mode: both;
-  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
-}
-.fullscreen {
--webkit-transition: transform 0.5s linear 0, background 0.3s linear 0.5s;
--webkit-transform: scale(1) translateY(0);
-background: rgba(0, 0, 0, 0.8);
-}
-</style>
-
 <link rel="import" href="vendors/polymer/core-toolbar/core-toolbar.html">
 <link rel="import" href="vendors/polymer/core-icon-button/core-icon-button.html">
+
 <core-toolbar class="tall">
   <span flex>Desktop Capture Share</span>
   <core-icon-button id="fullscreen-button" icon="fullscreen"></core-icon-button>
@@ -59,14 +20,10 @@ background: rgba(0, 0, 0, 0.8);
 </core-toolbar>
 
 <div id="video-content" class="video-content">
-  <peer-video id="peer-video" style="display: none;" class="content-animation" host="screen-share-signaling.itinao.asia" port="8080" path="/share" debug="2"></peer-video>
+  <peer-video id="peer-video" hidden class="content-animation" host="screen-share-signaling.itinao.asia" port="8080" path="/share" debug="2"></peer-video>
 </div>
 
-<div id="loading" class="loading">
-  <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-     <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-  </svg>
-</div>
+<x-loading id="loading"></x-loading>
 
 
 
@@ -175,10 +132,66 @@ background: rgba(0, 0, 0, 0.8);
 </polymer-element>
 
 
+<polymer-element name="x-loading">
+  <template>
+    <style>
+      .loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(156, 154, 154, 0.3);
+      }
+      .spinner {
+        -webkit-animation: rotator 1.4s linear infinite;
+      }
+      @-webkit-keyframes rotator {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(270deg); }
+      }
+      .spinner-path {
+        stroke-dasharray: 187;
+        stroke-dashoffset: 0;
+        transform-origin: center;
+        -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+      }
+      @-webkit-keyframes colors {
+        0% { stroke: #4285F4; }
+        25% { stroke: #DE3E35; }
+        50% { stroke: #F7C223; }
+        75% { stroke: #1B9A59; }
+        100% { stroke: #4285F4; }
+      }
+      @-webkit-keyframes dash {
+       0% { stroke-dashoffset: 187; }
+       50% {
+         stroke-dashoffset: 46;
+         transform:rotate(135deg);
+       }
+       100% {
+         stroke-dashoffset: 187;
+         transform:rotate(450deg);
+       }
+      }
+    </style>
+    <div id="loading" class="loading">
+      <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+         <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+      </svg>
+    </div>
+  </template>
+  <script type="text/javascript">
+    Polymer();
+  </script>
+</polymer-element>
+
+
+
 <script>
 document.addEventListener('polymer-ready', function(e) {
   var videoContent = window['video-content'];
-  var videoContentDefaultClass = videoContent.className;
   var fullscreenButton = window['fullscreen-button'];
   // フルスクリーン化
   fullscreenButton.addEventListener('click', function(event) {
@@ -189,17 +202,17 @@ document.addEventListener('polymer-ready', function(e) {
     videoContent.classList.remove("fullscreen")
   });
 
+  // Load時のアニメーション
   var peerVideo = window['peer-video'];
   var loading = window['loading'];
   peerVideo.onStreamCallback = function() {
     setTimeout(function() {// loadしてる感を出すため300ms
       loading.remove();
-      peerVideo.style.display = '';
+      peerVideo.hidden = false;
     }, 300);
   };
 });
 </script>
-
 
 
 </body>
