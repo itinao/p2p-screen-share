@@ -14,15 +14,19 @@ var bgScriptBuildDir = clientBase + 'build/js/';
 var webBase = 'webroot/';
 var webSassFiles = webBase + 'scss/*.scss';
 var webSassBuildDir = webBase + 'build/css/';
+var webHtmlFiles = webBase + '*.html';
+var webHtmlBuildDir = webBase + 'build/html/';
 
 
 // requires
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
+var minifyHtml = require('gulp-minify-html');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var vulcanize = require('gulp-vulcanize');
 
 
 /**
@@ -89,10 +93,36 @@ gulp.task('build-web-sass', function() {
   .pipe(gulp.dest(webSassBuildDir));
 });
 
+// web用htmlの生成
+gulp.task('build-web-html', function () {
+  // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
+  var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
+
+//  gulp.src(['webroot/vendors/polymer/**/paper-*.html', 'webroot/vendors/polymer/**/core-*.html'])
+//  .pipe(gulp.dest('webroot/build/components/'));
+//
+//  gulp.src(['webroot/vendors/polymer/**/paper-*.css', 'webroot/vendors/polymer/**/core-*.css'])
+//  .pipe(minifyCss())
+//  .pipe(gulp.dest('webroot/build/components/'));
+
+//  gulp.src(['webroot/build/components/**/paper-*.html', 'webroot/build/components//**/core-*.html'])
+//  .pipe(vulcanize({dest: 'webroot/build/components/.tmp/'}))
+//  .pipe(minifyHtml(minifyHtmlOption))
+//  .pipe(gulp.dest('webroot/build/components/'));
+
+  gulp.src(webHtmlFiles)
+  .pipe(vulcanize({dest: webHtmlBuildDir}))
+  .pipe(minifyHtml(minifyHtmlOption))
+  .pipe(gulp.dest(webHtmlBuildDir));
+});
+
+
 // ウォッチャー
 gulp.task('build-web-watcher', function() {
   gulp.watch(webSassFiles, function(event) {
     gulp.run('build-web-sass');
   });
 });
+
+
 
