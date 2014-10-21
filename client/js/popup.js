@@ -73,6 +73,7 @@ var DesktopCaptureShareVM = Class.extend({
       this.createPeerInstance(function() {
         setTimeout(function() {// SWITCHのアニメーションを見せてからダイアログ出す
           this.bg.appPeer.startCapture();
+          window.close();// Windowsではpopupが閉じないので明示的に閉じる
         }.bind(this), 500);
       }.bind(this));
     } else {
