@@ -117,7 +117,7 @@ var AppPeer = Class.extend({
         title: option.title,
         message: option.message,
         type: 'basic',
-        iconUrl: 'icon.png'
+        iconUrl: 'img/icon.png'
       },
       function(id){
         callback && callback();
