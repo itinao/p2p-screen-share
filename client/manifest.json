@@ -6,7 +6,7 @@
   "content_security_policy": "script-src 'self' https://apis.google.com/ 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "icon.png"
+    "default_icon": "img/icon.png"
   },
   "background": {
     "scripts":["build/js/background.min.js"]
@@ -16,6 +16,6 @@
     "desktopCapture"
   ],
   "icons" : {
-    "128": "icon.png"
+    "128": "img/icon.png"
   }
 }

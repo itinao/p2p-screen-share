@@ -96,6 +96,9 @@ var DesktopCaptureShareVM = Class.extend({
 
   isSupport: function() {
     var matches = navigator.userAgent.match(/Chrome\/(...)/);// 念のため3桁とる
+    if (!matches) {
+      return false;
+    }
     var version = Number(matches[1]);
     return this.supportVersion < version ? true : false;
   }

@@ -17,7 +17,7 @@
       </div>
     
       <div class="app-content">
-        <!-- ko if: isSupport -->
+        <!-- ko if: isSupport() -->
           <div class="description" data-bind="html: shareDescription()"></div>
           <div class="share-url" data-bind="text: shareUrl()"></div>
           <div class="share-button">
@@ -26,7 +26,7 @@
             <label for="switch" class="label"></label>
           </div>
         <!-- /ko -->
-        <!-- ko ifnot: isSupport -->
+        <!-- ko ifnot: isSupport() -->
           <div class="attention">※ Google Chrom ver.35以上がサポート対象です</div>
         <!-- /ko -->
       </div>
