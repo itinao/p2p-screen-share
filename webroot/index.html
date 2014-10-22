@@ -8,7 +8,6 @@
 </head>
 <body unresolved>
 
-<link rel="import" href="vendors/polymer/core-meta/core-meta.html">
 <link rel="import" href="vendors/polymer/core-toolbar/core-toolbar.html">
 <link rel="import" href="vendors/polymer/core-icon-button/core-icon-button.html">
 
@@ -54,13 +53,30 @@ h1, h2 {
         <p>ログイン不要な画面共有アプリケーションです。</p>
         <core-icon-button id="info-button" icon="cloud-download" style="background: #0041A2; color: #fff;">Desctop Capture Share</core-icon-button>
         <p>画面共有をする側はGoogle Chrome 拡張機能をインストールする必要があるので、<br>上記リンクからインストールしてください。</p>
-        <p style="color: #7C7C7C;">※閲覧をする側はインストール不要です。<br>Google Chromeのみ動作をサポートしています。</p>
+        <p style="color: #666;">※閲覧をする側はインストール不要です。<br>Google Chromeのみ動作をサポートしています。</p>
       </div>
     </div>
 
     <h2>How to Use</h1>
     <div horizontal layout>
-      How to Use
+      <div flex style="width: 50%; font-size: 20px; line-height: 32px;">
+      <p>拡張機能のインストール後、<br>下記の操作で画面を共有することができます。</p>
+      <dl style="margin: 20px; color: #666; font-size: 18px;">
+        <dd style="clear: left;   float: left; margin: 0;">1. </dd>
+        <dt style="margin: 10px 0;">Google Chromeの右上に表示されたアイコンをクリックし、ウィンドウを開く</dt>
+        <dd style="clear: left;   float: left; margin: 0;">2. </dd>
+        <dt style="margin: 10px 0;">画面共有ON/OFFのボタンをクリックし、画面共有を開始する</dt>
+        <dd style="clear: left;   float: left; margin: 0;">3. </dd>
+        <dt style="margin: 10px 0;">画面の共有ポップアップが表示されるので、共有する画面を選択する</dt>
+        <dd style="clear: left;   float: left; margin: 0;">4. </dd>
+        <dt style="margin: 10px 0;">再度アイコンをクリックし、ウィンドウを開く</dt>
+        <dd style="clear: left;   float: left; margin: 0;">5. </dd>
+        <dt style="margin: 10px 0;">URLが生成されているので、そのURLをコピーしてシェアする</dt>
+      </dl>
+      </div>
+      <div flex style="width: 50%;">
+        <img style="width: 453px; height: 450px;" src="img/extension.jpg">
+      </div>
     </div>
 
     <h2>Contact</h1>
@@ -72,6 +88,31 @@ h1, h2 {
   </div>
 </div>
 
+<div style="
+    position: absolute;
+    background-image: url(img/arrow.png);
+    width: 150px;
+    height: 158px;
+    background-size: 150px 158px;
+    background-repeat: no-repeat;
+    bottom: 10%;
+    right: 10%;
+    opacity: 0;
+    -webkit-animation: arrow 3s;
+"></div>
+<style>
+@-webkit-keyframes arrow {
+  0% {opacity: 1; -webkit-transform: translateY(0px);}
+  30% {opacity: 1; -webkit-transform: translateY(0px);}
+  40% {opacity: 1; -webkit-transform: translateY(10px);}
+  50% {opacity: 1; -webkit-transform: translateY(0px);}
+  60% {opacity: 1; -webkit-transform: translateY(10px);}
+  70% {opacity: 1; -webkit-transform: translateY(0px);}
+  80% {opacity: 1; -webkit-transform: translateY(10px);}
+  90% {opacity: 1; -webkit-transform: translateY(0px);}
+  100% {opacity: 0; -webkit-transform: translateY(0px);}
+}
+</style>
 
 
 </body>
