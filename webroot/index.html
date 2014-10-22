@@ -88,6 +88,32 @@ h1, h2 {
   </div>
 </div>
 
+<div style="
+    position: absolute;
+    background-image: url(img/arrow.png);
+    width: 150px;
+    height: 158px;
+    background-size: 150px 158px;
+    background-repeat: no-repeat;
+    bottom: 10%;
+    right: 10%;
+    opacity: 0;
+    -webkit-animation: arrow 3s;
+"></div>
+<style>
+@-webkit-keyframes arrow {
+  0% {opacity: 1; -webkit-transform: translateY(0px);}
+  30% {opacity: 1; -webkit-transform: translateY(0px);}
+  40% {opacity: 1; -webkit-transform: translateY(10px);}
+  50% {opacity: 1; -webkit-transform: translateY(0px);}
+  60% {opacity: 1; -webkit-transform: translateY(10px);}
+  70% {opacity: 1; -webkit-transform: translateY(0px);}
+  80% {opacity: 1; -webkit-transform: translateY(10px);}
+  90% {opacity: 1; -webkit-transform: translateY(0px);}
+  100% {opacity: 0; -webkit-transform: translateY(0px);}
+}
+</style>
+
 
 </body>
 </html>
