@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Desktop Capture Share</title>
+  <link rel="stylesheet" href="build/css/share.min.css" />
+  <script type="text/javascript" src="vendors/polymer/platform/platform.js"></script>
+</head>
+<body unresolved>
+
+<link rel="import" href="vendors/polymer/core-meta/core-meta.html">
+<link rel="import" href="vendors/polymer/core-toolbar/core-toolbar.html">
+<link rel="import" href="vendors/polymer/core-icon-button/core-icon-button.html">
+
+<style>
+.main-content {
+  position: absolute;
+  width: 86%;
+  height: 85%;
+  top: 12%;
+  left: 7%;
+  background: #fff;
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
+  color: #0041A2;
+  font-size: 28px;
+  overflow: scroll;
+}
+.about {
+  margin: 20px;
+}
+.about > div {
+  text-align: center;
+}
+h1, h2 {
+  border-bottom: 1px solid #0041A2;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.8);
+}
+</style>
+
+
+<core-toolbar class="tall">
+  <span flex>Desktop Capture Share</span>
+</core-toolbar>
+
+<div id="main-content" class="main-content">
+  <div class="about">
+
+    <h1>Desktop Capture Share</h1>
+    <div horizontal layout>
+      <div flex style="width: 50%;">
+        <img style="width: 100%;" src="img/desc.png">
+      </div>
+      <div flex style="width: 50%; margin: 10px; font-size: 20px; line-height: 32px;">
+        <p>ログイン不要な画面共有アプリケーションです。</p>
+        <core-icon-button id="info-button" icon="cloud-download" style="background: #0041A2; color: #fff;">Desctop Capture Share</core-icon-button>
+        <p>画面共有をする側はGoogle Chrome 拡張機能をインストールする必要があるので、<br>上記リンクからインストールしてください。</p>
+        <p style="color: #7C7C7C;">※閲覧をする側はインストール不要です。<br>Google Chromeのみ動作をサポートしています。</p>
+      </div>
+    </div>
+
+    <h2>How to Use</h1>
+    <div horizontal layout>
+      How to Use
+    </div>
+
+    <h2>Contact</h1>
+    <div>
+      <p>お問い合わせはこちらへお願いします。</p>
+      <core-icon-button id="contacts-button" icon="perm-contact-cal" style="background: #0041A2; color: #fff;">itinao@gmail.com</core-icon-button><br>
+    </div>
+
+  </div>
+</div>
+
+
+
+</body>
+</html>
