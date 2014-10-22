@@ -15,10 +15,8 @@
 
 <core-toolbar class="tall">
   <span flex>Desktop Capture Share</span>
+  <core-icon-button id="home-button" icon="home"></core-icon-button>
   <core-icon-button id="fullscreen-button" icon="fullscreen"></core-icon-button>
-  <!-- TODO:
-  <core-icon-button id="info-button" icon="info"></core-icon-button>
-  -->
 </core-toolbar>
 
 <div id="video-content" class="video-content">
@@ -31,7 +29,13 @@
 <script>
 document.addEventListener('polymer-ready', function(e) {
   var videoContent = window['video-content'];
+  var homeButton = window['home-button'];
   var fullscreenButton = window['fullscreen-button'];
+
+  // homeへ
+  homeButton.addEventListener('click', function(event) {
+    window.open("index.html");
+  });
 
   // フルスクリーン化
   fullscreenButton.addEventListener('click', function(event) {
