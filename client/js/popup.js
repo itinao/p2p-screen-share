@@ -95,6 +95,20 @@ var DesktopCaptureShareVM = Class.extend({
     });
   },
 
+  saveToClipboard: function(value) {
+    var textArea = document.createElement("textarea");
+    textArea.style.opacity = 0;
+    document.body.appendChild(textArea);
+    textArea.value = value;
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  },
+
+  copyUrl: function() {
+    this.saveToClipboard(this.shareUrl());
+  },
+
   isSupport: function() {
     var matches = navigator.userAgent.match(/Chrome\/(...)/);// 念のため3桁とる
     if (!matches) {
@@ -116,22 +130,3 @@ var load = function() {
     desktopCaptureShareInstance.createShortUrl();
   }
 };
-
-
-// clipbord sample
-//function saveToClipboard(str) {
-//    var textArea = document.createElement("textarea");
-//    textArea.style.cssText = "position:absolute;left:-100%";
-//
-//    document.body.appendChild(textArea);
-//
-//    textArea.value = str;
-//    textArea.select();
-//    document.execCommand("copy");
-//
-//    document.body.removeChild(textArea);
-//}
-//
-//$("#copy-button").click(function() {
-//  saveToClipboard($('#url').text());
-//});

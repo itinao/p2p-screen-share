@@ -74,7 +74,7 @@ a {
   background-color: #ffffff;
   margin: 10px;
   padding: 20px;
-  color: #666666;
+  color: #666;
   font-size: 36px;
   text-align: center;
   box-shadow: 0 0 2px #999999;
@@ -82,12 +82,10 @@ a {
 }
 .description {
   padding: 10px;
-  color: #999999;
   font-size: 30px;
   padding-top: 20px;
 }
 .share-url {
-  color: #999999;
   font-size: 20px;
   width: 100%;
   height: 30px;
@@ -104,6 +102,17 @@ a {
   font-size: 14px;
   padding-right: 50px;
 }
+
+.home-link {
+  position: relative;
+  top: -10px;
+  font-size: 14px;
+  text-align: right;
+}
+.home-link a {
+  color: #0041A2;
+}
+
 .attention {
   font-size: 12px;
 }
