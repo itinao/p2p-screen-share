@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Desktop Capture Share</title>
-    <script src="build/js/popup.min.js"></script>
-    <link rel="stylesheet" href="build/css/popup.min.css" type="text/css">
+    <script src="../js/popup.min.js"></script>
+    <link rel="stylesheet" href="../css/popup.min.css" type="text/css">
   </head>
   <body>
 
     <div class="app-wrapper">
       <div class="app-title">
         <div class="loading-area fadeout">
-          <img src="img/reload.png" class="loading">
+          <img src="../../img/reload.png" class="loading">
         </div>
         <div class="fadein">Desktop Capture Share</div>
       </div>
@@ -38,7 +38,7 @@
       </div>
 
       <!-- ko if: shareUrl() !== readyShareUrl -->
-        <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-copy-button"><img src="img/copy.png"></div>
+        <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-copy-button"><img src="../../img/copy.png"></div>
       <!-- /ko -->
 
     </div>

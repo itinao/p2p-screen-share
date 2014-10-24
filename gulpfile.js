@@ -10,6 +10,8 @@ var popupScriptFiles = ['client/js/class.js', 'client/js/knockout.js', 'client/j
 var popupScriptBuildDir = clientBase + 'build/js/';
 var bgScriptFiles = ['client/js/class.js', 'client/js/peer.js', 'client/js/app_peer.js', 'client/js/background.js'];
 var bgScriptBuildDir = clientBase + 'build/js/';
+var clientHtmlFiles = clientBase + 'html/*.html';
+var clientHtmlBuildDir = clientBase + 'build/html/';
 
 var webBase = 'webroot/';
 var webSassFiles = webBase + 'scss/*.scss';
@@ -63,6 +65,16 @@ gulp.task('build-client-bg-script', function() {
   .pipe(gulp.dest(bgScriptBuildDir));
 });
 
+// web用htmlの生成
+gulp.task('build-client-html', function () {
+  // knockout.jsを使ってるので comments: trueは必須
+  var minifyHtmlOption = {comments: true, quotes: true, spare: false, empty: true};
+  gulp.src(clientHtmlFiles)
+  .pipe(minifyHtml(minifyHtmlOption))
+  .pipe(gulp.dest(clientHtmlBuildDir));
+});
+
+
 // ウォッチャー
 gulp.task('build-client-watcher', function() {
   gulp.watch(popupSassFiles, function(event) {
@@ -74,10 +86,13 @@ gulp.task('build-client-watcher', function() {
   gulp.watch(bgScriptFiles, function(event) {
     gulp.run('build-client-bg-script');
   });
+  gulp.watch(clientHtmlFiles, function(event) {
+    gulp.run('build-client-html');
+  });
 });
 
 // 全て実行
-gulp.task('build-client', ['build-client-popup-sass', 'build-client-popup-script', 'build-client-bg-script']);
+gulp.task('build-client', ['build-client-popup-sass', 'build-client-popup-script', 'build-client-bg-script', 'build-client-html']);
 
 
 /**
