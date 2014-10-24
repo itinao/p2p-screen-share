@@ -38,10 +38,14 @@
       </div>
 
       <!-- ko if: shareUrl() !== readyShareUrl -->
-        <div data-bind="click: copyUrl()" class="app-setting-button" style="bottom: 120px; background-color: #D2D9E4;"><img src="img/copy.png" style="padding: 11px;"></div>
+        <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-copy-button"><img src="img/copy.png"></div>
       <!-- /ko -->
 
     </div>
+
+    <!-- ko foreach: notifications -->
+      <div class="clip-notification" data-bind="text: $data.text"></div>
+    <!-- /ko -->
 
     <script src="https://apis.google.com/js/client.js?onload=load"></script>
 

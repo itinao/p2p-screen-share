@@ -16,17 +16,24 @@ var DesktopCaptureShareVM = Class.extend({
     ready: '画面共有を開始するとURLが生成されます',
     work: '共有URLを生成しました<br>{{$1}}人が接続中です'
   },
+  notificationText: {
+    clip: 'クリックプードにコピーしました'
+  },
   readyShareUrl: 'URL',
   supportVersion: 35,
 
   captureOnOff: null,
   shareUrl: null,
   shareDescription: null,
+  nowCopy: null,
+  notifications: null,
   
   init: function() {
     this.captureOnOff = ko.observable();
     this.shareUrl = ko.observable();
     this.shareDescription = ko.observable();
+    this.nowCopy = ko.observable();
+    this.notifications = ko.observableArray();
 
     if (this.isConnected()) {
       this.initConnected();
@@ -106,7 +113,17 @@ var DesktopCaptureShareVM = Class.extend({
   },
 
   copyUrl: function() {
+    this.nowCopy(true);
     this.saveToClipboard(this.shareUrl());
+    setTimeout(function() {
+      this.nowCopy(false);
+    }.bind(this), 200);
+    this.createNotification();
+  },
+
+  createNotification: function() {
+    this.notifications.removeAll();// 溜まっちゃうから消しとく
+    this.notifications.push({text: this.notificationText.clip});
   },
 
   isSupport: function() {
