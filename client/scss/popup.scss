@@ -1,19 +1,5 @@
-@font-face {
-  font-family: 'rounded-mplus-1p-bold';
-  src: url(../../font/rounded-mplus-1p-bold.ttf);
-}
-
-
-
-body {
-  width: 400px;
-  height: 400px;
-  text-align: center;
-  font-family: 'rounded-mplus-1p-bold' !important;
-}
-a {
-  text-decoration: none;
-}
+@import 'base';
+@import 'module';
 
 .app-wrapper {
   background-color: #f5f5f5;
@@ -25,7 +11,9 @@ a {
   left: 0;
 }
 
-/** title */
+/**
+ * header
+ */
 .app-wrapper .app-title {
   position: absolute;
   width: 100%;
@@ -35,31 +23,31 @@ a {
   -webkit-animation-duration: 2s;
   -webkit-animation-name: spin;
 }
-.loading-area {
+.app-wrapper .app-title .loading-area {
   position: absolute;
   bottom: 0px;
   width: 100%;
 }
-.loading {
+.app-wrapper .app-title .loading {
   -webkit-animation-delay: 0.3s;
   -webkit-animation-duration: 0.8s;
   -webkit-animation-name: load;
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: 2;
 }
-.fadeout {
+.app-wrapper .app-title .fadeout {
   -webkit-animation-delay: 1.6s;
   -webkit-animation-duration: 0.5s;
   -webkit-animation-name: disparition;
   -webkit-animation-timing-function: linear;
   -webkit-animation-fill-mode: both;
 }
-.fadein {
+.app-wrapper .app-title .fadein {
   position: absolute;
   bottom: 5px;
   width: 100%;
   font-size: 28px;
-  color: #ffffff; 
+  color: #ffffff;
   -webkit-animation-delay: 2.1s;
   -webkit-animation-duration: 0.5s;
   -webkit-animation-name: apparition;
@@ -67,8 +55,29 @@ a {
   -webkit-animation-fill-mode: both;
 }
 
+/** header animation */
+@-webkit-keyframes spin {
+  0%,100% {height: 60px;}
+  20% {height: 370px;border-bottom-left-radius: 50%;border-bottom-right-radius: 50%;}
+  35%,65% {height:53px;}50% {height:70px;} 80% {height:63px;}
+}
+@-webkit-keyframes load {
+  0% {-webkit-transform: rotate(0deg);}
+  100% {-webkit-transform: rotate(360deg);}
+}
+@-webkit-keyframes disparition {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+@-webkit-keyframes apparition {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
 
-/** content */
+
+/**
+ * content
+ */
 .app-wrapper .app-content {
   height: 300px;
   background-color: #ffffff;
@@ -80,12 +89,12 @@ a {
   box-shadow: 0 0 2px #999999;
   margin-top: 70px;
 }
-.description {
+.app-wrapper .app-content .description {
   padding: 10px;
   font-size: 30px;
   padding-top: 20px;
 }
-.share-url {
+.app-wrapper .app-content .share-url {
   font-size: 20px;
   width: 100%;
   height: 30px;
@@ -93,34 +102,34 @@ a {
   border: 2px solid rgba(48, 142, 245, 0.36);
   -webkit-box-shadow: rgba(0, 30, 253, 0.38) 0px 0px 6px 3px;
 }
-.share-button {
+.app-wrapper .app-content .share-button {
   position: relative;
   height: 130px;
   left: 30px;
 }
-.share-button .share-button-desc {
+.app-wrapper .app-content .share-button .share-button-desc {
   font-size: 14px;
   padding-right: 50px;
 }
-
-.home-link {
+.app-wrapper .app-content .home-link {
   position: relative;
   top: -10px;
   font-size: 14px;
   text-align: right;
 }
-.home-link a {
+.app-wrapper .app-content .home-link a {
   color: #666;
   border-bottom: 1px solid #666;
 }
-
-.attention {
+.app-wrapper .app-content .attention {
   font-size: 12px;
 }
 
 
-
-.clip-notification {
+/**
+ * クリップボードコピーボタン
+ */
+.app-wrapper .clip-notification {
   position: absolute;
   width: 200px;
   height: 40px;
@@ -142,11 +151,6 @@ a {
   100% {-webkit-transform: translateY(80px); opacity: 0;}
 }
 
-
-
-
-
-/**  */
 .app-copy-button {
   width: 70px;
   height: 70px;
@@ -168,65 +172,3 @@ a {
   padding: 11px;
 }
 
-
-/** components: toggle button */
-.label {
-  width: 200px;
-  height: 60px;
-  background: #0041A2;
-  box-shadow: inset 0 0 0 30px #4a4a4a;
-  border-radius: 30px;
-  display: block;
-  top: 50px;
-  left: 50px;
-  position: absolute;
-  z-index: 1;
-  transition: all 300ms ease-in 0s;
-}
-#switch {
-  top: 60px;
-  position: absolute;
-  left: 100px;
-}
-#switch:before {
-  content: "";
-  position: absolute;
-  top: -23px;
-  left: -75px;
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-  display: block;
-  background: #0041A2;
-  border: none;
-  z-index: 2;  
-  box-shadow: inset 0 0 0 40px #5f5f5f,0 0 5px 0 #000;
-  transition: box-shadow 500ms ease-in 0s, left 300ms ease-in 0s;
-}
-#switch:checked:before {
-  left: 90px;
-  box-shadow: inset 0 0 0 0 #0041A2,0 0 5px 0 #000;
-}
-#switch:checked + label {
-  box-shadow: inset 0 0 0 0 #4a4a4a;
-}
-
-
-/** animation */
-@-webkit-keyframes spin {
-  0%,100% {height: 60px;}
-  20% {height: 370px;border-bottom-left-radius: 50%;border-bottom-right-radius: 50%;}
-  35%,65% {height:53px;}50% {height:70px;} 80% {height:63px;}   
-}
-@-webkit-keyframes load {
-  0% {-webkit-transform: rotate(0deg);}
-  100% {-webkit-transform: rotate(360deg);}   
-}
-@-webkit-keyframes disparition {
-  0% {opacity: 1;}
-  100% {opacity: 0;}   
-}
-@-webkit-keyframes apparition {
-  0% {opacity: 0;}
-  100% {opacity: 1;}   
-}

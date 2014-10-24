@@ -9,6 +9,7 @@
   <body>
 
     <div class="app-wrapper">
+
       <div class="app-title">
         <div class="loading-area fadeout">
           <img src="../../img/reload.png" class="loading">
@@ -23,8 +24,8 @@
           <div class="share-url" data-bind="text: shareUrl()"></div>
           <div class="share-button">
             <span class="share-button-desc">画面共有ON/OFF</span>
-            <input type="checkbox" id="switch" data-bind="event: {change: changeCaptureStatus}, attr: {checked: captureOnOff()}">
-            <label for="switch" class="label"></label>
+            <input type="checkbox" id="m-switch" data-bind="event: {change: changeCaptureStatus}, attr: {checked: captureOnOff()}">
+            <label for="m-switch" class="m-switch-label"></label>
           </div>
           <div class="home-link">
             <a href="http://screen-share.itinao.asia/" target="_blank">Desktop Capture Shareとは</a>

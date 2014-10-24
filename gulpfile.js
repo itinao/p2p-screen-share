@@ -76,7 +76,7 @@ gulp.task('build-client-html', function () {
 
 
 // ウォッチャー
-gulp.task('build-client-watcher', function() {
+gulp.task('build-client-watch', function() {
   gulp.watch(popupSassFiles, function(event) {
     gulp.run('build-client-popup-sass');
   });
