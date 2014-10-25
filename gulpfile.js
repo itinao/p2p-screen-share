@@ -104,7 +104,7 @@ gulp.task('build-client', ['build-client-popup-sass', 'build-client-popup-script
  */
 // web用cssの生成
 gulp.task('build-web-sass', function() {
-  gulp.src(webSassFiles)
+  return gulp.src(webSassFiles)
   .pipe(sass())
   .pipe(gulp.dest(webSassBuildDir))
   .pipe(minifyCss())
@@ -112,37 +112,36 @@ gulp.task('build-web-sass', function() {
   .pipe(gulp.dest(webSassBuildDir));
 });
 
-// polymer関連のファイルは最初にminifyしておく
-gulp.task('pre-build-web-html', function (done) {
+// Polymer関連のbuildは先に実行する
+gulp.task('pre-build-polymer-html', function () {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
   var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
-
-  // polymer関連のファイルは最初にminifyしておく
-  gulp.src(['webroot/vendors/polymer/**/*.html'])
+  return gulp.src(['webroot/vendors/polymer/**/*.html'])
   .pipe(minifyInline())
   .pipe(minifyHtml(minifyHtmlOption))
   .pipe(gulp.dest('webroot/build/vendors/polymer/'));
-
-  gulp.src(['webroot/components/*.html'])
+});
+gulp.task('pre-build-polymer-js', function () {
+  return gulp.src(['webroot/vendors/polymer/**/*.js', 'webroot/vendors/polymer/**/*.js.map'])
+  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
+});
+gulp.task('pre-build-polymer-css', function () {
+  return gulp.src(['webroot/vendors/polymer/**/*.css'])
+  .pipe(minifyCss())
+  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
+});
+gulp.task('pre-build-peer-js', function () {
+  return gulp.src(['webroot/vendors/peerjs/*.js'])
+  .pipe(gulp.dest('webroot/build/vendors/peerjs/'));
+});
+gulp.task('pre-build-components-html', function () {
+  // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
+  var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
+  return gulp.src(['webroot/components/*.html'])
   .pipe(minifyInline())
   .pipe(minifyHtml(minifyHtmlOption))
   .pipe(gulp.dest('webroot/build/components/'));
-
-  gulp.src(['webroot/vendors/polymer/**/*.js', 'webroot/vendors/polymer/**/*.js.map'])
-  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
-
-  gulp.src(['webroot/vendors/peerjs/*.js'])
-  .pipe(gulp.dest('webroot/build/vendors/peerjs/'));
-
-  gulp.src(['webroot/vendors/polymer/**/*.css'])
-  .pipe(minifyCss())
-  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
-
-  setTimeout(function() {// TODO: バラしてreturnで管理すればtimeoutまたないでもよい
-    done();
-  }, 10000);
 });
-
 // web用htmlの生成の実行
 gulp.task('exec-build-web-html', function() {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
@@ -157,7 +156,7 @@ gulp.task('exec-build-web-html', function() {
 // web用htmlの生成
 gulp.task('build-web-html', function() {
   // 順序保証で実行
-  runSequence('pre-build-web-html', 'exec-build-web-html');
+  runSequence('pre-build-polymer-html', 'pre-build-polymer-js', 'pre-build-polymer-css', 'pre-build-peer-js', 'pre-build-components-html', 'exec-build-web-html');
 });
 
 // ウォッチャー
@@ -169,8 +168,3 @@ gulp.task('build-web-watch', function() {
 
 // 全て実行
 gulp.task('build-web', ['build-web-sass', 'build-web-html']);
-
-
-
-
-
