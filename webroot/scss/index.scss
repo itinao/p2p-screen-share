@@ -67,7 +67,7 @@
  */
 .attention-arrow {
   position: absolute;
-  background-image: url(img/arrow.png);
+  background-image: url(../../img/arrow.png);
   width: 150px;
   height: 158px;
   background-size: 150px 158px;
@@ -75,7 +75,7 @@
   bottom: 10%;
   right: 10%;
   opacity: 0;
-  -webkit-animation: arrow 3s;
+  -webkit-animation: arrow 2s;
 }
 @-webkit-keyframes arrow {
   0% {opacity: 1; -webkit-transform: translateY(0px);}
