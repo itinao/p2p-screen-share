@@ -4,22 +4,34 @@
 
 // config
 // *** chromeの拡張機能
-var clientBase = 'client/';
-var popupSassFiles = clientBase + 'scss/*.scss';
-var popupSassBuildDir = clientBase + 'build/css/';
-var popupScriptFiles = ['client/js/class.js', 'client/js/knockout.js', 'client/js/popup.js'];
+var clientBase          = 'client/';
+var popupSassFiles      = clientBase + 'scss/*.scss';
+var popupSassBuildDir   = clientBase + 'build/css/';
+var popupScriptFiles    = ['client/js/class.js', 'client/js/knockout.js', 'client/js/popup.js'];
 var popupScriptBuildDir = clientBase + 'build/js/';
-var bgScriptFiles = ['client/js/class.js', 'client/js/peer.js', 'client/js/app_peer.js', 'client/js/background.js'];
-var bgScriptBuildDir = clientBase + 'build/js/';
-var clientHtmlFiles = clientBase + 'html/*.html';
-var clientHtmlBuildDir = clientBase + 'build/html/';
+var bgScriptFiles       = ['client/js/class.js', 'client/js/peer.js', 'client/js/app_peer.js', 'client/js/background.js'];
+var bgScriptBuildDir    = clientBase + 'build/js/';
+var clientHtmlFiles     = clientBase + 'html/*.html';
+var clientHtmlBuildDir  = clientBase + 'build/html/';
 
 // *** webroot側
-var webBase = 'webroot/';
-var webSassFiles = webBase + 'scss/*.scss';
-var webSassBuildDir = webBase + 'build/css/';
-var webHtmlFiles = webBase + '*.html';
-var webHtmlBuildDir = webBase + 'build/html/';
+var webBase                = 'webroot/';
+var webSassFiles           = webBase + 'scss/*.scss';
+var webSassBuildDir        = webBase + 'build/css/';
+var webHtmlFiles           = webBase + 'html/*.html';
+var webHtmlBuildDir        = webBase + '/';
+
+var webPolymerHtmlFiles    = [webBase + 'vendors/polymer/**/*.html'];
+var webPolymerJsFiles      = [webBase + 'vendors/polymer/**/*.js', webBase + 'vendors/polymer/**/*.js.map'];
+var webPolymerCssFiles     = [webBase + 'vendors/polymer/**/*.css'];
+var webPeerJsFiles         = [webBase + 'vendors/peerjs/*.js'];
+var webComponentsHtmlFiles = [webBase + 'components/*.html'];
+
+var webPolymerHtmlBuildDir    = webBase + 'build/vendors/polymer/';
+var webPolymerJsBuildDir      = webBase + 'build/vendors/polymer/';
+var webPolymerCssBuildDir     = webBase + 'build/vendors/polymer/';
+var webPeerJsBuildDir         = webBase + 'build/vendors/peerjs/';
+var webComponentsHtmlBuildDir = webBase + 'build/components/';
 
 
 // requires
@@ -116,31 +128,31 @@ gulp.task('build-web-sass', function() {
 gulp.task('pre-build-polymer-html', function () {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
   var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
-  return gulp.src(['webroot/vendors/polymer/**/*.html'])
+  return gulp.src(webPolymerHtmlFiles)
   .pipe(minifyInline())
   .pipe(minifyHtml(minifyHtmlOption))
-  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
+  .pipe(gulp.dest(webPolymerHtmlBuildDir));
 });
 gulp.task('pre-build-polymer-js', function () {
-  return gulp.src(['webroot/vendors/polymer/**/*.js', 'webroot/vendors/polymer/**/*.js.map'])
-  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
+  return gulp.src(webPolymerJsFiles)
+  .pipe(gulp.dest(webPolymerJsBuildDir));
 });
 gulp.task('pre-build-polymer-css', function () {
-  return gulp.src(['webroot/vendors/polymer/**/*.css'])
+  return gulp.src(webPolymerCssFiles)
   .pipe(minifyCss())
-  .pipe(gulp.dest('webroot/build/vendors/polymer/'));
+  .pipe(gulp.dest(webPolymerCssBuildDir));
 });
 gulp.task('pre-build-peer-js', function () {
-  return gulp.src(['webroot/vendors/peerjs/*.js'])
-  .pipe(gulp.dest('webroot/build/vendors/peerjs/'));
+  return gulp.src(webPeerJsFiles)
+  .pipe(gulp.dest(webPeerJsBuildDir));
 });
 gulp.task('pre-build-components-html', function () {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
   var minifyHtmlOption = {comments: false, quotes: true, spare: false, empty: true};
-  return gulp.src(['webroot/components/*.html'])
+  return gulp.src(webComponentsHtmlFiles)
   .pipe(minifyInline())
   .pipe(minifyHtml(minifyHtmlOption))
-  .pipe(gulp.dest('webroot/build/components/'));
+  .pipe(gulp.dest(webComponentsHtmlBuildDir));
 });
 // web用htmlの生成の実行
 gulp.task('exec-build-web-html', function() {
