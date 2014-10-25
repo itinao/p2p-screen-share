@@ -17,7 +17,7 @@ var DesktopCaptureShareVM = Class.extend({
     work: '共有URLを生成しました<br>{{$1}}人が接続中です'
   },
   notificationText: {
-    clip: 'クリックプードにコピーしました'
+    clip: 'クリップボードにコピーしました'
   },
   readyShareUrl: 'URL',
   supportVersion: 35,

@@ -129,7 +129,28 @@
 /**
  * クリップボードコピーボタン
  */
-.app-wrapper .clip-notification {
+.app-wrapper .app-copy-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 120px;
+  right: 20px;
+  box-shadow: 1px 1px 8px #333333;
+  background-color: #fff;
+  cursor: pointer;
+}
+.app-wrapper .app-copy-button:hover {
+  background-color: #D2D9E4;
+}
+.app-wrapper .app-copy-button.on {
+  background-color: #CFCFCF !important;
+}
+.app-wrapper .app-copy-button img {
+  padding: 11px;
+}
+
+.clip-notification {
   position: absolute;
   width: 200px;
   height: 40px;
@@ -150,25 +171,3 @@
   80%  {-webkit-transform: translateY(0px); opacity: 1;}
   100% {-webkit-transform: translateY(80px); opacity: 0;}
 }
-
-.app-copy-button {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 120px;
-  right: 20px;
-  box-shadow: 1px 1px 8px #333333;
-  background-color: #fff;
-  cursor: pointer;
-}
-.app-copy-button:hover {
-  background-color: #D2D9E4;
-}
-.app-copy-button.on {
-  background-color: #CFCFCF !important;
-}
-.app-copy-button img {
-  padding: 11px;
-}
-
