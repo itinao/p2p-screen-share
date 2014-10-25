@@ -3,7 +3,7 @@
   "name": "Desktop Capture Share",
   "short_name": "DCS",
   "version": "1.0",
-  "description": "Desktop Capture Shareとは、ログイン不要な画面共有アプリケーションです。",
+  "description": "Desktop Capture Shareは、ログイン不要な画面共有アプリケーションです。この拡張機能をインストールし、生成した共有用URLをシェアしましょう。",
   "content_security_policy": "script-src 'self' https://apis.google.com/ 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_popup": "build/html/popup.html",
