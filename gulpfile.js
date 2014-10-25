@@ -137,7 +137,7 @@ gulp.task('build-web-html', function () {
 
 
 // ウォッチャー
-gulp.task('build-web-watcher', function() {
+gulp.task('build-web-watch', function() {
   gulp.watch(webSassFiles, function(event) {
     gulp.run('build-web-sass');
   });

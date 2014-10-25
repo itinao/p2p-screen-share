@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Desktop Capture Share</title>
-  <link rel="stylesheet" href="build/css/share.min.css" />
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="stylesheet" href="build/css/index.min.css">
   <script type="text/javascript" src="vendors/polymer/platform/platform.js"></script>
 </head>
 <body unresolved>
@@ -11,108 +12,51 @@
 <link rel="import" href="vendors/polymer/core-toolbar/core-toolbar.html">
 <link rel="import" href="vendors/polymer/core-icon-button/core-icon-button.html">
 
-<style>
-.main-content {
-  position: absolute;
-  width: 86%;
-  height: 85%;
-  top: 12%;
-  left: 7%;
-  background: #fff;
-  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
-  color: #0041A2;
-  font-size: 28px;
-  overflow: scroll;
-}
-.about {
-  margin: 20px;
-}
-.about > div {
-  text-align: center;
-}
-h1, h2 {
-  border-bottom: 1px solid #0041A2;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.8);
-}
-</style>
-
-
 <core-toolbar class="tall">
   <span flex>Desktop Capture Share</span>
 </core-toolbar>
 
 <div id="main-content" class="main-content">
-  <div class="about">
+  <div>
 
     <h1>Desktop Capture Share</h1>
     <div horizontal layout>
-      <div flex style="width: 50%;">
-        <img style="width: 100%;" src="img/desc.png">
+      <div flex>
+        <img width="100%" src="img/desc.png">
       </div>
-      <div flex style="width: 50%; margin: 10px; font-size: 20px; line-height: 32px;">
+      <div flex class="app-about">
         <p>ログイン不要な画面共有アプリケーションです。</p>
-        <core-icon-button id="info-button" icon="extension" style="background: #0041A2; color: #fff;">Desctop Capture Share</core-icon-button>
+        <core-icon-button id="info-button" icon="extension">Desctop Capture Share</core-icon-button>
         <p>画面共有をする側はGoogle Chrome 拡張機能をインストールする必要があるので、<br>上記リンクからインストールしてください。</p>
-        <p style="color: #666;">※閲覧をする側はインストール不要です。<br>Google Chromeのみ動作をサポートしています。</p>
+        <p class="app-attention">※閲覧をする側はインストール不要です。<br>Google Chromeのみ動作をサポートしています。</p>
       </div>
     </div>
 
     <h2>How to Use</h1>
     <div horizontal layout>
-      <div flex style="width: 50%; font-size: 20px; line-height: 32px;">
-      <p>拡張機能のインストール後、<br>下記の操作で画面を共有することができます。</p>
-      <dl style="margin: 20px; color: #666; font-size: 18px; text-align: left;">
-        <dd style="clear: left;   float: left; margin: 0;">1. </dd>
-        <dt style="margin: 10px 0; padding-left: 24px;">Google Chromeの右上に表示されたアイコンをクリックし、ウィンドウを開く。</dt>
-        <dd style="clear: left;   float: left; margin: 0;">2. </dd>
-        <dt style="margin: 10px 0; padding-left: 24px;">画面共有ON/OFFのボタンをクリックし、画面共有を開始する。</dt>
-        <dd style="clear: left;   float: left; margin: 0;">3. </dd>
-        <dt style="margin: 10px 0; padding-left: 24px;">画面の共有ポップアップが表示されるので、共有する画面を選択する。</dt>
-        <dd style="clear: left;   float: left; margin: 0;">4. </dd>
-        <dt style="margin: 10px 0; padding-left: 24px;">再度アイコンをクリックし、ウィンドウを開く。</dt>
-        <dd style="clear: left;   float: left; margin: 0;">5. </dd>
-        <dt style="margin: 10px 0; padding-left: 24px;">URLが生成されているので、そのURLをコピーしてシェアする。</dt>
-      </dl>
+      <div flex class="app-use">
+        <p>拡張機能のインストール後、<br>下記の操作で画面を共有することができます。</p>
+        <dl class="app-use-process">
+          <dd>1. </dd><dt>Google Chromeの右上に表示されたアイコンをクリックし、ウィンドウを開く。</dt>
+          <dd>2. </dd><dt>画面共有ON/OFFのボタンをクリックし、画面共有を開始する。</dt>
+          <dd>3. </dd><dt>画面の共有ポップアップが表示されるので、共有する画面を選択する。</dt>
+          <dd>4. </dd><dt>再度アイコンをクリックし、ウィンドウを開く。</dt>
+          <dd>5. </dd><dt>URLが生成されているので、そのURLをコピーしてシェアする。</dt>
+        </dl>
       </div>
-      <div flex style="width: 50%;">
-        <img style="width: 453px; height: 450px;" src="img/extension.jpg">
+      <div flex>
+        <img width="453" height="450" src="img/extension.jpg">
       </div>
     </div>
 
     <h2>Contact</h1>
-    <div>
+    <div class="area-contact">
       <p>お問い合わせはこちらへお願いします。</p>
-      <core-icon-button id="contacts-button" icon="perm-contact-cal" style="background: #0041A2; color: #fff;">itinao@gmail.com</core-icon-button><br>
+      <core-icon-button id="contacts-button" icon="perm-contact-cal">itinao@gmail.com</core-icon-button><br>
     </div>
 
   </div>
 </div>
-
-<div style="
-    position: absolute;
-    background-image: url(img/arrow.png);
-    width: 150px;
-    height: 158px;
-    background-size: 150px 158px;
-    background-repeat: no-repeat;
-    bottom: 10%;
-    right: 10%;
-    opacity: 0;
-    -webkit-animation: arrow 3s;
-"></div>
-<style>
-@-webkit-keyframes arrow {
-  0% {opacity: 1; -webkit-transform: translateY(0px);}
-  30% {opacity: 1; -webkit-transform: translateY(0px);}
-  40% {opacity: 1; -webkit-transform: translateY(10px);}
-  50% {opacity: 1; -webkit-transform: translateY(0px);}
-  60% {opacity: 1; -webkit-transform: translateY(10px);}
-  70% {opacity: 1; -webkit-transform: translateY(0px);}
-  80% {opacity: 1; -webkit-transform: translateY(10px);}
-  90% {opacity: 1; -webkit-transform: translateY(0px);}
-  100% {opacity: 0; -webkit-transform: translateY(0px);}
-}
-</style>
 
 
 </body>
