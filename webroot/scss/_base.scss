@@ -44,10 +44,18 @@ core-icon-button {
 }
 
 
+.left-banner {
+  position: absolute;
+  width: 10%;
+  height: 60%;
+  top: 202px;
+  left: 0px;
+  overflow: scroll;
+}
 .sns-links {
   position: absolute;
-  width: 7%;
-  height: 360px;
-  top: 192px;
+  width: 10%;
+  height: 60%;
+  top: 202px;
   right: 0px;
 }
