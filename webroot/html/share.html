@@ -30,9 +30,15 @@
 
 <div class="sns-links">
   <div id="m-sns-links">
-    <a class="facebook-link" href="https://www.facebook.com/sharer/sharer.php?u=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-facebook"></span></a>
-    <a class="twitter-link" href="https://twitter.com/share?url=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-twitter"></span></a>
-    <a class="google-link" href="https://plus.google.com/share?url=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-google-plus"></span></a>
+    <a class="facebook-link"
+       href="https://www.facebook.com/sharer/sharer.php?u=http://screen-share.itinao.asia/"
+       target="_blank"><span class="fa fa-facebook"></span></a>
+    <a class="twitter-link"
+       href="https://twitter.com/intent/tweet?url=http://screen-share.itinao.asia/&text=ログイン不要なデスクトップ画面の共有アプリが登場！&via=itinao&hashtags=dcs"
+       target="_blank"><span class="fa fa-twitter"></span></a>
+    <a class="google-link"
+       href="https://plus.google.com/share?url=http://screen-share.itinao.asia/"
+       target="_blank"><span class="fa fa-google-plus"></span></a>
   </div>
 </div>
 
@@ -74,6 +80,20 @@ document.addEventListener('polymer-ready', function(e) {
       peerVideo.hidden = false;
     }, 300);
   };
+
+  var mSnsLinks = window['m-sns-links'];
+  var snsLinks = mSnsLinks.children;
+  for (var i = 0, l = snsLinks.length; i < l; i++) {
+    snsLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      var w = 550,  h = 420, l = 0, t = 0, sw = screen.width, sh = screen.height;
+      if (sw > w) l = Math.round(sw/2 - w/2);
+      if (sh > h) t = Math.round(sh/2 - h/2);
+      window.open(this.href, "Tweet", "width="+w+",height="+h+",left="+l+",top="+t+",scrollbars=yes,resizable=yes,toolbar=no,location=yes");
+      return false;
+    });
+  }
 });
 </script>
 
