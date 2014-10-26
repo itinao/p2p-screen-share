@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="google-site-verification" content="WQL2kPnlQk5mPyCCsY8PsQMnRKBL0kAVIPSQhhHyQuk" />
   <title>Desktop Capture Share</title>
   <link rel="shortcut icon" href="../img/favicon.ico">
   <link rel="stylesheet" href="../build/css/index.min.css">
@@ -58,7 +59,51 @@
   </div>
 </div>
 
+
+<div class="sns-links">
+  <div id="m-sns-links">
+    <a class="facebook-link" href="https://www.facebook.com/sharer/sharer.php?u=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-facebook"></span></a>
+    <a class="twitter-link" href="https://twitter.com/share?url=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-twitter"></span></a>
+    <a class="google-link" href="https://plus.google.com/share?url=http://screen-share.itinao.asia/" target="_blank"><span class="fa fa-google-plus"></span></a>
+  </div>
+</div>
+
 <div class="attention-arrow"></div>
+
+
+<script>
+document.addEventListener('polymer-ready', function(e) {
+  var infoButton = window['info-button'];
+  var contactsButton = window['contacts-button'];
+  infoButton.addEventListener('click', function(event) {
+    window.open("https://chrome.google.com/webstore/detail/albmbgococdgmmoajacmcbfcidhbinlh");
+  });
+  contactsButton.addEventListener('click', function(event) {
+    window.open("mailto:itinao@gmail.com?subject=[Desktop Capture Share] お問い合わせ&amp;body=ご記入ください");
+  });
+
+  var mainContent = window['main-content'];
+  var mSnsLinks = window['m-sns-links'];
+  mainContent.addEventListener('scroll', function(event) {
+    var offset = this.scrollTop * 5;
+    var rotateElems = mSnsLinks.children;
+    for (var i = 0, l = rotateElems.length; i < l; i++) {
+      rotateElems[i].style.webkitTransform = 'rotate(' + offset + 'deg)';
+    }
+  });
+});
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56094808-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 </body>
 </html>

@@ -176,6 +176,9 @@ gulp.task('build-web-watch', function() {
   gulp.watch(webSassFiles, function(event) {
     gulp.run('build-web-sass');
   });
+  gulp.watch(webHtmlFiles, function(event) {
+    gulp.run('build-web-html');
+  });
 });
 
 // 全て実行

@@ -6,6 +6,10 @@
   font-family: 'NotoSansArmenian-Bold';
   src: url(../../font/rounded-mplus-1p-bold.ttf);
 }
+@font-face {
+  font-family: 'fontawesome-webfont';
+  src: url(../../font/fontawesome-webfont.ttf);
+}
 
 html, body {
   margin: 0;
@@ -37,4 +41,13 @@ core-toolbar {
 core-icon-button {
   background: #0041A2;
   color: #fff;
+}
+
+
+.sns-links {
+  position: absolute;
+  width: 7%;
+  height: 360px;
+  top: 192px;
+  right: 0px;
 }
