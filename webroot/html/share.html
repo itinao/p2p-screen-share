@@ -6,6 +6,7 @@
   <title>Share | Desktop Capture Share</title>
   <link rel="shortcut icon" href="../img/favicon.ico">
   <link rel="stylesheet" href="../build/css/share.min.css">
+  <script type="text/javascript" src="../build/js/all.min.js"></script>
   <script type="text/javascript" src="../build/vendors/polymer/platform/platform.js"></script>
 </head>
 <body unresolved>
@@ -80,6 +81,12 @@ document.addEventListener('polymer-ready', function(e) {
       peerVideo.hidden = false;
     }, 300);
   };
+  if (window.config && window.config.peerConfig) {
+    peerVideo.host  = window.config.peerConfig.host;
+    peerVideo.port  = window.config.peerConfig.port;
+    peerVideo.path  = window.config.peerConfig.path;
+    peerVideo.debug = window.config.peerConfig.debug;
+  }
 
   var mSnsLinks = window['m-sns-links'];
   var snsLinks = mSnsLinks.children;
