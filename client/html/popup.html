@@ -22,13 +22,25 @@
         <!-- ko if: isSupport() -->
           <div class="description" data-bind="html: shareDescription()"></div>
           <div class="share-url" data-bind="text: shareUrl()"></div>
+
+          <!-- ko if: shareUrl() !== readyShareUrl -->
+            <!-- ko if: !recordingStatus() || recordingStatus() === bg.appPeer.recordingStatusType.ready -->
+              <div data-bind="click: startRecording, css: {'on': nowCopy()}" class="app-button recording-start-button"><img src="../../img/copy.png"></div>
+            <!-- /ko -->
+            <!-- ko if: recordingStatus() === bg.appPeer.recordingStatusType.recording -->
+              <div data-bind="click: stopRecording, css: {'on': nowCopy()}" class="app-button recording-stop-button"><img src="../../img/copy.png"></div>
+            <!-- /ko -->
+            <div data-bind="click: saveRecording, css: {'on': nowCopy()}" class="app-button recording-save-button"><img src="../../img/copy.png"></div>
+            <div data-bind="click: previewRecording, css: {'on': nowCopy()}" class="app-button recording-preview-button"><img src="../../img/copy.png"></div>
+            <div data-bind="click: shareRecording, css: {'on': nowCopy()}" class="app-button recording-share-button"><img src="../../img/copy.png"></div>
+            <div data-bind="click: stopRecording, css: {'on': nowCopy()}" class="app-button recording-delete-button"><img src="../../img/copy.png"></div>
+            <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-button copy-button"><img src="../../img/copy.png"></div>
+          <!-- /ko -->
+
           <div class="share-button">
             <span class="share-button-desc">画面共有ON/OFF</span>
             <input type="checkbox" id="m-switch" data-bind="event: {change: changeCaptureStatus}, attr: {checked: captureOnOff()}">
             <label for="m-switch" class="m-switch-label"></label>
-          </div>
-          <div class="home-link">
-            <a href="http://screen-share.itinao.asia/" target="_blank">Desktop Capture Shareとは</a>
           </div>
         <!-- /ko -->
 
@@ -38,23 +50,14 @@
 
       </div>
 
-      <!-- ko if: shareUrl() !== readyShareUrl -->
-        <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-copy-button"><img src="../../img/copy.png"></div>
-      <!-- /ko -->
 
-      <div data-bind="click: startRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
-          left: 20px;
-      "><img src="../../img/copy.png"></div>
-      <div data-bind="click: stopRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
-          left: 20px;
-          bottom: 80px;
-      "><img src="../../img/copy.png"></div>
-      <div data-bind="click: saveRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
-          left: 20px;
-          bottom: 40px;
-      "><img src="../../img/copy.png"></div>
+
+      <div class="home-link">
+        <a href="http://screen-share.itinao.asia/" target="_blank">Desktop Capture Shareとは</a>
+      </div>
 
     </div>
+
 
     <!-- ko foreach: notifications -->
       <div class="clip-notification" data-bind="text: $data.text"></div>
