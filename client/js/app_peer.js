@@ -12,6 +12,9 @@ var AppPeer = Class.extend({
   shareBaseUrl: null,
   shareUrl: null,
 
+  // 録画用
+  recordRtc: null,
+
   init: function(option) {
     this.shareBaseUrl = option.shareUrl;
     this.peer = new Peer({host: option.host, port: option.port, path: option.path, debug: option.debug});
@@ -100,6 +103,7 @@ var AppPeer = Class.extend({
           },
           function(stream) {
             this.stream = stream;
+            this.recordingInit(stream);
             this.createNotification({title: '共有が完了しました', message: '拡張機能からURLを確認してください'});
             callback && callback();
           }.bind(this),
@@ -123,5 +127,40 @@ var AppPeer = Class.extend({
         callback && callback();
       }
     );
+  },
+
+  // 録画処理の初期化
+  recordingInit: function(stream) {
+debugger;
+    this.recordRtc = RecordRTC(stream, {
+        type: "video",
+        video: {
+            width: 640,
+            height: 480
+        },
+        canvas: {
+            width: 640,
+            height: 480
+        }
+    });
+  },
+
+  // 録画開始
+  startRecording: function() {
+    this.recordRtc.startRecording();
+  },
+
+  // 録画終了
+  stopRecording: function() {
+    this.recordRtc.stopRecording(function(videoUrl) {
+      // ここのURLは録画内容の確認に使える
+    });
+  },
+
+  // 録画保存
+  saveRecording: function() {
+    var blob = this.recordRtc.getBlob();
+    // ローカルにセーブさせる
+    // 接続相手にもファイルを送ってあげる
   }
 });

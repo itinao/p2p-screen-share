@@ -3,13 +3,15 @@
  */
 
 // config
+var configFile = 'config/config.js';
+
 // *** chromeの拡張機能
 var clientBase          = 'client/';
 var popupSassFiles      = clientBase + 'scss/*.scss';
 var popupSassBuildDir   = clientBase + 'build/css/';
-var popupScriptFiles    = ['client/js/class.js', 'client/js/knockout.js', 'client/js/popup.js'];
+var popupScriptFiles    = [configFile, 'client/js/class.js', 'client/js/knockout.js', 'client/js/popup.js'];
 var popupScriptBuildDir = clientBase + 'build/js/';
-var bgScriptFiles       = ['client/js/class.js', 'client/js/peer.js', 'client/js/app_peer.js', 'client/js/background.js'];
+var bgScriptFiles       = [clientBase + 'js/class.js', clientBase + 'js/RecordRTC.js', clientBase + 'js/peer.js', clientBase + 'js/app_peer.js', clientBase + 'js/background.js'];
 var bgScriptBuildDir    = clientBase + 'build/js/';
 var clientHtmlFiles     = clientBase + 'html/*.html';
 var clientHtmlBuildDir  = clientBase + 'build/html/';
@@ -18,6 +20,8 @@ var clientHtmlBuildDir  = clientBase + 'build/html/';
 var webBase                = 'webroot/';
 var webSassFiles           = webBase + 'scss/*.scss';
 var webSassBuildDir        = webBase + 'build/css/';
+var webJsFiles             = [configFile];
+var webJsBuildDir          = webBase + 'build/js/';
 var webHtmlFiles           = webBase + 'html/*.html';
 var webHtmlBuildDir        = webBase + '/';
 
@@ -124,6 +128,16 @@ gulp.task('build-web-sass', function() {
   .pipe(gulp.dest(webSassBuildDir));
 });
 
+// web用jsの生成
+gulp.task('build-web-script', function() {
+  return gulp.src(webJsFiles)
+  .pipe(concat('all.js'))
+  .pipe(gulp.dest(webJsBuildDir))
+  .pipe(uglify())
+  .pipe(rename({extname: '.min.js'}))
+  .pipe(gulp.dest(webJsBuildDir));
+});
+
 // Polymer関連のbuildは先に実行する
 gulp.task('pre-build-polymer-html', function () {
   // {spare: false, empty: true}にしないとpolymerのLayout機能と折り合わない
@@ -176,10 +190,13 @@ gulp.task('build-web-watch', function() {
   gulp.watch(webSassFiles, function(event) {
     gulp.run('build-web-sass');
   });
+  gulp.watch(webJsFiles, function(event) {
+    gulp.run('build-web-script');
+  });
   gulp.watch(webHtmlFiles, function(event) {
     gulp.run('build-web-html');
   });
 });
 
 // 全て実行
-gulp.task('build-web', ['build-web-sass', 'build-web-html']);
+gulp.task('build-web', ['build-web-sass', 'build-web-script', 'build-web-html']);

@@ -28,12 +28,16 @@ var DesktopCaptureShareVM = Class.extend({
   nowCopy: null,
   notifications: null,
   
-  init: function() {
+  init: function(config) {
     this.captureOnOff = ko.observable();
     this.shareUrl = ko.observable();
     this.shareDescription = ko.observable();
     this.nowCopy = ko.observable();
     this.notifications = ko.observableArray();
+
+    if (config && config.peerConfig && Object.keys(config).length !== 0) {
+      this.peerConfig = config.peerConfig;
+    }
 
     if (this.isConnected()) {
       this.initConnected();
@@ -138,7 +142,7 @@ var DesktopCaptureShareVM = Class.extend({
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  desktopCaptureShareInstance = new DesktopCaptureShareVM;
+  desktopCaptureShareInstance = new DesktopCaptureShareVM(window.config);
   ko.applyBindings(desktopCaptureShareInstance);
 }, false);
 
