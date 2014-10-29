@@ -14,6 +14,7 @@ var AppPeer = Class.extend({
 
   // 録画用
   recordRtc: null,
+  videoUrl: null,
 
   init: function(option) {
     this.shareBaseUrl = option.shareUrl;
@@ -131,17 +132,16 @@ var AppPeer = Class.extend({
 
   // 録画処理の初期化
   recordingInit: function(stream) {
-debugger;
     this.recordRtc = RecordRTC(stream, {
-        type: "video",
-        video: {
-            width: 640,
-            height: 480
-        },
-        canvas: {
-            width: 640,
-            height: 480
-        }
+      type: "video",
+      video: {
+        width: 640,
+        height: 480
+      },
+      canvas: {
+        width: 640,
+        height: 480
+      }
     });
   },
 
@@ -151,10 +151,13 @@ debugger;
   },
 
   // 録画終了
-  stopRecording: function() {
+  stopRecording: function(callback) {
     this.recordRtc.stopRecording(function(videoUrl) {
       // ここのURLは録画内容の確認に使える
-    });
+      console.log(videoUrl);
+      this.videoUrl = videoUrl;
+      callback && callback(videoUrl);
+    }.bind(this));
   },
 
   // 録画保存

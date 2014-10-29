@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Desktop Capture Share</title>
-    <script src="../js/popup.min.js"></script>
+    <script src="../js/popup.js"></script>
     <link rel="stylesheet" href="../css/popup.min.css" type="text/css">
   </head>
   <body>
@@ -41,6 +41,18 @@
       <!-- ko if: shareUrl() !== readyShareUrl -->
         <div data-bind="click: copyUrl, css: {'on': nowCopy()}" class="app-copy-button"><img src="../../img/copy.png"></div>
       <!-- /ko -->
+
+      <div data-bind="click: startRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
+          left: 20px;
+      "><img src="../../img/copy.png"></div>
+      <div data-bind="click: stopRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
+          left: 20px;
+          bottom: 80px;
+      "><img src="../../img/copy.png"></div>
+      <div data-bind="click: saveRecording, css: {'on': nowCopy()}" class="app-copy-button" style="
+          left: 20px;
+          bottom: 40px;
+      "><img src="../../img/copy.png"></div>
 
     </div>
 

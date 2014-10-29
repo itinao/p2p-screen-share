@@ -137,6 +137,30 @@ var DesktopCaptureShareVM = Class.extend({
     }
     var version = Number(matches[1]);
     return this.supportVersion < version ? true : false;
+  },
+
+  startRecording: function() {
+    this.bg.appPeer.startRecording();
+  },
+
+  stopRecording: function() {
+    this.bg.appPeer.stopRecording(function(videoUrl) {
+console.log(videoUrl);
+    });
+  },
+
+  // 録画保存
+  saveRecording: function() {
+    var videoUrl = this.bg.appPeer.videoUrl;
+    var elem = document.createElement("a");
+    elem.download = "test.webm"
+    elem.href = videoUrl;
+    elem.click();
+  },
+
+  // 送信処理
+  sendRecording: function() {
+    var blob = this.bg.appPeer.recordRtc.getBlob();
   }
 });
 
