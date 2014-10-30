@@ -45,3 +45,42 @@
 #m-switch:checked + label {
   box-shadow: inset 0 0 0 0 #4a4a4a;
 }
+
+
+/**
+ *
+ */
+.fa {
+  position: absolute;
+  display: inline-block;
+  font: normal normal normal 14px/1 fontawesome-webfont;
+  font-style: normal;
+  font-size: 1.5em;
+  color: #0041A2;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.fa-clipboard {top: 20px;left: 20px;}
+.fa-clipboard:before {
+  content: "\f0ea";
+}
+.fa-play-circle-o:before {
+  content: "\f01d";
+}
+.fa-stop:before {
+  content: "\f04d";
+}
+.fa-save:before {
+  content: "\f0c7";
+}
+.fa-share {top: 10px;left: 14px;}
+.fa-share:before {
+  content: "\f064";
+}
+.fa-youtube-play:before {
+  content: "\f16a";
+}
+.fa-close {top: 10px;left: 14px;}
+.fa-close:before {
+  content: "\f00d";
+}

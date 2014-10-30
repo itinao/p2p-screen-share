@@ -7,13 +7,19 @@
   src: url(../../font/rounded-mplus-1p-bold.ttf);
 }
 
+@font-face {
+  font-family: 'fontawesome-webfont';
+  src: url(../../font/fontawesome-webfont.ttf);
+}
+
 body {
   width: 400px;
   height: 400px;
   text-align: center;
-  font-family: 'rounded-mplus-1p-bold' !important;
+  font-family: 'rounded-mplus-1p-bold';
 }
 
 a {
   text-decoration: none;
 }
+
