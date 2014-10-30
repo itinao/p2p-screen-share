@@ -13,7 +13,7 @@ var DesktopCaptureShareVM = Class.extend({
   bg: chrome.extension.getBackgroundPage(),
 //  qrBaseUrl: 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=',
   descriptions: {
-    ready: '画面共有を開始するとURLが生成されます',
+    ready: '画面共有を開始すると<br>URLが生成されます',
     work: '共有URLを生成しました<br>{{$1}}人が接続中です'
   },
   notificationText: {
@@ -27,6 +27,8 @@ var DesktopCaptureShareVM = Class.extend({
   shareDescription: null,
   nowCopy: null,
   notifications: null,
+
+  recordingStatus: null,
   
   init: function(config) {
     this.captureOnOff = ko.observable();
@@ -34,6 +36,8 @@ var DesktopCaptureShareVM = Class.extend({
     this.shareDescription = ko.observable();
     this.nowCopy = ko.observable();
     this.notifications = ko.observableArray();
+
+    this.recordingStatus = ko.observable();
 
     if (config && config.peerConfig && Object.keys(config).length !== 0) {
       this.peerConfig = config.peerConfig;
@@ -141,12 +145,14 @@ var DesktopCaptureShareVM = Class.extend({
 
   startRecording: function() {
     this.bg.appPeer.startRecording();
+    this.recordingStatus(this.bg.appPeer.recordingStatus);
   },
 
   stopRecording: function() {
     this.bg.appPeer.stopRecording(function(videoUrl) {
+      this.recordingStatus(this.bg.appPeer.recordingStatus);
 console.log(videoUrl);
-    });
+    }.bind(this));
   },
 
   // 録画保存
@@ -158,8 +164,14 @@ console.log(videoUrl);
     elem.click();
   },
 
+  // プレビュー
+  previewRecording: function() {
+    var videoUrl = this.bg.appPeer.videoUrl;
+    window.open(videoUrl, "", 300, 300, 300, 300);
+  },
+
   // 送信処理
-  sendRecording: function() {
+  shareRecording: function() {
     var blob = this.bg.appPeer.recordRtc.getBlob();
   }
 });

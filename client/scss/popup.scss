@@ -2,13 +2,12 @@
 @import 'module';
 
 .app-wrapper {
-  background-color: #f5f5f5;
-  padding-top: 20px;
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: absolute;
   top: 0;
   left: 0;
+  background-color: #f5f5f5;
 }
 
 /**
@@ -22,6 +21,7 @@
   top: 0px;
   -webkit-animation-duration: 2s;
   -webkit-animation-name: spin;
+  z-index: 3;
 }
 .app-wrapper .app-title .loading-area {
   position: absolute;
@@ -79,76 +79,93 @@
  * content
  */
 .app-wrapper .app-content {
-  height: 300px;
+  position: absolute;
+  width: 400px;
+  height: 340px;
+  top: 70px;
+  left: 8px;
   background-color: #ffffff;
-  margin: 10px;
-  padding: 20px;
   color: #666;
-  font-size: 36px;
+  font-size: 20px;
   text-align: center;
   box-shadow: 0 0 2px #999999;
-  margin-top: 70px;
 }
 .app-wrapper .app-content .description {
-  padding: 10px;
+  position: absolute;
+  top: 90px;
+  width: 400px;
   font-size: 30px;
-  padding-top: 20px;
 }
 .app-wrapper .app-content .share-url {
-  font-size: 20px;
-  width: 100%;
+  width: 360px;
   height: 30px;
   line-height: 30px;
+  margin: 10px 19px;
   border: 2px solid rgba(48, 142, 245, 0.36);
   -webkit-box-shadow: rgba(0, 30, 253, 0.38) 0px 0px 6px 3px;
 }
 .app-wrapper .app-content .share-button {
-  position: relative;
-  height: 130px;
-  left: 30px;
+    position: absolute;
+    bottom: 10px;
+    height: 130px;
+    width: 300px;
+    margin: 0 50px;
 }
 .app-wrapper .app-content .share-button .share-button-desc {
-  font-size: 14px;
-  padding-right: 50px;
-}
-.app-wrapper .app-content .home-link {
   position: relative;
-  top: -10px;
+  top: 20px;
   font-size: 14px;
-  text-align: right;
-}
-.app-wrapper .app-content .home-link a {
-  color: #666;
-  border-bottom: 1px solid #666;
 }
 .app-wrapper .app-content .attention {
   font-size: 12px;
 }
 
+/**
+ *
+ */
+.app-wrapper .home-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 14px;
+}
+.app-wrapper .home-link a {
+  color: #666;
+  border-bottom: 1px solid #666;
+}
 
 /**
  * クリップボードコピーボタン
  */
-.app-wrapper .app-copy-button {
+.app-wrapper .app-button {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   position: absolute;
-  bottom: 120px;
-  right: 20px;
   box-shadow: 1px 1px 8px #333333;
   background-color: #fff;
   cursor: pointer;
 }
-.app-wrapper .app-copy-button:hover {
+.app-wrapper .app-button:hover {
   background-color: #D2D9E4;
 }
-.app-wrapper .app-copy-button.on {
+.app-wrapper .app-button.on {
   background-color: #CFCFCF !important;
 }
-.app-wrapper .app-copy-button img {
+.app-wrapper .app-button img {
   padding: 11px;
 }
+
+
+.app-wrapper .recording-start-button {left: 20px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .recording-stop-button {left: 20px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .recording-save-button {left: 80px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .recording-preview-button {left: 140px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .recording-share-button {left: 200px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .recording-delete-button {left: 260px; width: 50px; height: 50px; margin-top: 10px;}
+.app-wrapper .copy-button {left: 320px; margin-top: -20px;}
+
+
 
 .clip-notification {
   position: absolute;

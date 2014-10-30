@@ -15,6 +15,12 @@ var AppPeer = Class.extend({
   // 録画用
   recordRtc: null,
   videoUrl: null,
+  recordingStatus: 0,// 0: 未録画, 1: 録画中, 2: 録画完了
+  recordingStatusType: {
+    ready: 0,
+    recording: 1,
+    recorded: 2,
+  },
 
   init: function(option) {
     this.shareBaseUrl = option.shareUrl;
@@ -148,6 +154,7 @@ var AppPeer = Class.extend({
   // 録画開始
   startRecording: function() {
     this.recordRtc.startRecording();
+    this.recordingStatus = this.recordingStatusType.recording;
   },
 
   // 録画終了
@@ -156,6 +163,7 @@ var AppPeer = Class.extend({
       // ここのURLは録画内容の確認に使える
       console.log(videoUrl);
       this.videoUrl = videoUrl;
+      this.recordingStatus = this.recordingStatusType.recorded;
       callback && callback(videoUrl);
     }.bind(this));
   },
